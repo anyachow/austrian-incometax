@@ -1,0 +1,490 @@
+@prefix : <http://example.org/austrian-tax-resident#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://example.org/austrian-tax-resident> .
+
+<http://example.org/austrian-tax-resident> rdf:type owl:Ontology ;
+                                          rdfs:label "Austrian Tax Residents Income Tax Ontology"@en ;
+                                          rdfs:comment """A comprehensive OWL 2 ontology for determining income tax filing obligations for Austrian tax residents.
+
+This ontology implements the Austrian Income Tax Act (Einkommensteuergesetz - EStG) provisions for resident taxpayers, 
+providing automated reasoning capabilities to determine filing requirements based on income types and amounts.
+
+SCOPE: Austrian tax residents only (persons with unlimited tax liability under §1 EStG)
+- Wage income (§25 EStG - employment income subject to payroll tax)
+- Other income sources (self-employment, rental, investment, etc.)
+- Filing thresholds and requirements for tax year 2025
+- Automated classification of taxpayer categories
+
+VERSION: 2.1 (Fixed Consistency Issues)
+"""@en ;
+                                          owl:versionInfo "2.1" .
+
+#################################################################
+#    Annotation Properties
+#################################################################
+
+dc:creator rdf:type owl:AnnotationProperty .
+dc:subject rdf:type owl:AnnotationProperty .
+dcterms:license rdf:type owl:AnnotationProperty .
+dcterms:created rdf:type owl:AnnotationProperty .
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+:legalBasis rdf:type owl:AnnotationProperty ;
+           rdfs:label "legal basis"@en ;
+           rdfs:comment "Reference to specific Austrian tax law provisions."@en .
+
+:taxYearApplicable rdf:type owl:AnnotationProperty ;
+                  rdfs:label "tax year applicable"@en ;
+                  rdfs:comment "Tax year(s) for which this rule applies."@en .
+
+:thresholdAmount rdf:type owl:AnnotationProperty ;
+                rdfs:label "threshold amount"@en ;
+                rdfs:comment "Specific monetary threshold in EUR for 2025."@en .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+### Primary Income Properties
+
+:hasAnnualWageIncome rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :AustrianResident ;
+                     rdfs:range xsd:decimal ;
+                     rdfs:label "has annual wage income"@en ;
+                     rdfs:comment "Total annual wage/pension income subject to payroll tax withholding under §25 EStG."@en .
+
+:hasOtherIncome rdf:type owl:DatatypeProperty ;
+                rdfs:domain :AustrianResident ;
+                rdfs:range xsd:decimal ;
+                rdfs:label "has other income"@en ;
+                rdfs:comment "Total annual income from non-wage sources (self-employment, rental, investment, etc.)."@en .
+
+### Employment Characteristics
+
+:hasMultipleEmployments rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :AustrianResident ;
+                        rdfs:range xsd:boolean ;
+                        rdfs:label "has multiple employments"@en ;
+                        rdfs:comment "Indicates whether the taxpayer has simultaneous employment relationships with multiple employers."@en .
+
+:hasSelfEmploymentIncome rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :AustrianResident ;
+                         rdfs:range xsd:boolean ;
+                         rdfs:label "has self-employment income"@en ;
+                         rdfs:comment "Indicates income from self-employment activities under §22 EStG."@en .
+
+:hasRentalIncome rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :AustrianResident ;
+                 rdfs:range xsd:boolean ;
+                 rdfs:label "has rental income"@en ;
+                 rdfs:comment "Indicates income from rental and leasing activities under §28 EStG."@en .
+
+:hasInvestmentIncome rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :AustrianResident ;
+                     rdfs:range xsd:boolean ;
+                     rdfs:label "has investment income"@en ;
+                     rdfs:comment "Indicates investment income above the €730 exemption threshold under §27 EStG."@en .
+
+### Administrative Properties
+
+:hasIncorrectTaxCredits rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :AustrianResident ;
+                        rdfs:range xsd:boolean ;
+                        rdfs:label "has incorrect tax credits"@en ;
+                        rdfs:comment "Indicates if tax credits were incorrectly applied in salary calculation."@en .
+
+:hasSpecialPaymentSituations rdf:type owl:DatatypeProperty ;
+                            rdfs:domain :AustrianResident ;
+                            rdfs:range xsd:boolean ;
+                            rdfs:label "has special payment situations"@en ;
+                            rdfs:comment "Indicates receipt of sick pay, armed forces payments, service vouchers, etc."@en .
+
+:hasVaryingIncomeLevels rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :AustrianResident ;
+                        rdfs:range xsd:boolean ;
+                        rdfs:label "has varying income levels"@en ;
+                        rdfs:comment "Indicates if employee received different levels of income during the year."@en .
+
+:hasUnclaimedDeductions rdf:type owl:DatatypeProperty ;
+                       rdfs:domain :AustrianResident ;
+                       rdfs:range xsd:boolean ;
+                       rdfs:label "has unclaimed deductions"@en ;
+                       rdfs:comment "Indicates presence of unclaimed income-related expenses, special expenses, or extraordinary burdens."@en .
+
+# Add new data properties
+:hasNoWageTax rdf:type owl:DatatypeProperty ;
+              rdfs:domain :AustrianResident ;
+              rdfs:range xsd:boolean ;
+              rdfs:label "has no wage tax"@en ;
+              rdfs:comment "Indicates if the individual was not wage taxed at all."@en .
+
+:hasIncorrectCommuterAllowance rdf:type owl:DatatypeProperty ;
+                               rdfs:domain :AustrianResident ;
+                               rdfs:range xsd:boolean ;
+                               rdfs:label "has incorrect commuter allowance"@en ;
+                               rdfs:comment "Indicates if a lump sum for commuters was incorrectly applied."@en .
+
+:hasIncorrectFamilyBonus rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :AustrianResident ;
+                         rdfs:range xsd:boolean ;
+                         rdfs:label "has incorrect family bonus"@en ;
+                         rdfs:comment "Indicates if Family Bonus Plus conditions were not met."@en .
+
+:hasDiscretionaryAssessment rdf:type owl:DatatypeProperty ;
+                            rdfs:domain :AustrianResident ;
+                            rdfs:range xsd:boolean ;
+                            rdfs:label "has discretionary assessment"@en ;
+                            rdfs:comment "Indicates if a discretionary assessment was included in salary calculation."@en .
+
+#################################################################
+#    Classes
+#################################################################
+
+### Base Taxpayer Class
+
+:AustrianResident rdf:type owl:Class ;
+                  rdfs:label "Austrian Tax Resident"@en ;
+                  rdfs:comment "A person subject to unlimited tax liability in Austria under §1 EStG."@en .
+
+### Filing Requirement Categories
+
+:MandatoryFilingL1 rdf:type owl:Class ;
+                  rdfs:label "Mandatory Filing with form L1"@en ;
+                  rdfs:comment """Taxpayers legally required to file L1 tax return under Austrian law.
+                  Required when:
+                  - Annual wage over 14,517 AND specific conditions are met
+                  - Tax credits or deductions incorrectly applied
+                  - Multiple simultaneous wage incomes
+                  - Special payment situations"""@en .
+
+:VoluntaryFilingL1 rdf:type owl:Class ;
+                  rdfs:label "Voluntary Filing with form L1"@en ;
+                  rdfs:comment """Taxpayers who may benefit from voluntary filing with L1 form.
+                  Applicable for:
+                  - Single employer with correct wage tax withholding
+                  - Varying income levels without rolling-up
+                  - Employer changes or partial year employment
+                  - Low income SV repayment eligibility
+                  - Unclaimed tax credits or deductions"""@en .
+
+:NoFilingRequired rdf:type owl:Class ;
+                 rdfs:label "No Filing Required"@en ;
+                 rdfs:comment "Taxpayers who are not required to file a tax return."@en .
+
+:MandatoryFilingE1 rdf:type owl:Class ;
+                  rdfs:label "Mandatory Filing with form E1"@en ;
+                  rdfs:comment """Taxpayers required to file E1 tax return.
+                  Required when:
+                  - Additional non-employment income exceeds EUR 730
+                  - Excludes fully taxed capital yields"""@en .
+
+#################################################################
+#    Disjoint Classes (Only Filing Requirements)
+#################################################################
+
+# Filing requirements are mutually exclusive
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :MandatoryFilingL1 :VoluntaryFilingL1 :MandatoryFilingE1 :NoFilingRequired )
+] .
+
+#################################################################
+#    Classification Rules (OWL 2 Restrictions)
+#################################################################
+
+# Update MandatoryL1Filer definition
+:MandatoryL1Filer owl:equivalentClass [
+    rdf:type owl:Class ;
+    owl:intersectionOf (
+        :AustrianResident
+        # Must have annual wage over 14,517
+        [ rdf:type owl:Restriction ;
+          owl:onProperty :hasAnnualWageIncome ;
+          owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                             owl:onDatatype xsd:decimal ;
+                             owl:withRestrictions ( [ xsd:minExclusive "14517.0"^^xsd:decimal ] ) ] ]
+        # AND one of these conditions
+        [ owl:unionOf (
+            # Case 1: Incorrect tax credits
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasIncorrectTaxCredits ;
+              owl:hasValue true ]
+            # Case 2: Multiple employments
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasMultipleEmployments ;
+              owl:hasValue true ]
+            # Case 3: Incorrect commuter allowance
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasIncorrectCommuterAllowance ;
+              owl:hasValue true ]
+            # Case 4: Incorrect Family Bonus Plus
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasIncorrectFamilyBonus ;
+              owl:hasValue true ]
+        ) ]
+    )
+] .
+
+# Also add cases for no wage tax, special payments, and discretionary assessment
+:AdditionalMandatoryL1Filer owl:equivalentClass [
+    rdf:type owl:Class ;
+    owl:unionOf (
+        # Case 5: No wage tax but income above threshold
+        [ owl:intersectionOf (
+            :AustrianResident
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasNoWageTax ;
+              owl:hasValue true ]
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasAnnualWageIncome ;
+              owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                 owl:onDatatype xsd:decimal ;
+                                 owl:withRestrictions ( [ xsd:minInclusive "13308.0"^^xsd:decimal ] ) ] ]
+        ) ]
+        # Case 6: Special payment situations
+        [ owl:intersectionOf (
+            :AustrianResident
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasSpecialPaymentSituations ;
+              owl:hasValue true ]
+        ) ]
+        # Case 7: Discretionary assessment
+        [ owl:intersectionOf (
+            :AustrianResident
+            [ rdf:type owl:Restriction ;
+              owl:onProperty :hasDiscretionaryAssessment ;
+              owl:hasValue true ]
+        ) ]
+    )
+] .
+
+# Update filing requirement assignments
+:MandatoryFilingL1 owl:equivalentClass :MandatoryL1Filer .
+:VoluntaryFilingL1 owl:equivalentClass :VoluntaryL1Filer .
+:MandatoryFilingE1 owl:equivalentClass :MandatoryE1Filer .
+
+# Add new data properties for voluntary filing conditions
+:hasSingleEmployer rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :AustrianResident ;
+                   rdfs:range xsd:boolean ;
+                   rdfs:label "has single employer"@en ;
+                   rdfs:comment "Indicates if employee has income solely from a single employer."@en .
+
+:hasCorrectWageTax rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :AustrianResident ;
+                   rdfs:range xsd:boolean ;
+                   rdfs:label "has correct wage tax"@en ;
+                   rdfs:comment "Indicates if wage tax was correctly withheld."@en .
+
+:hasVaryingIncomeNoRollup rdf:type owl:DatatypeProperty ;
+                          rdfs:domain :AustrianResident ;
+                          rdfs:range xsd:boolean ;
+                          rdfs:label "has varying income without rollup"@en ;
+                          rdfs:comment "Indicates if employee received different levels of income without rolling-up process."@en .
+
+:hasUnclaimedTaxCredits rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :AustrianResident ;
+                        rdfs:range xsd:boolean ;
+                        rdfs:label "has unclaimed tax credits"@en ;
+                        rdfs:comment "Indicates if entitled to unclaimed single-earner/single-parent tax credit or commuter allowance."@en .
+
+# Update VoluntaryL1Filer definition
+:VoluntaryL1Filer owl:equivalentClass [
+    rdf:type owl:Class ;
+    owl:intersectionOf (
+        :AustrianResident
+        [ owl:unionOf (
+            # Case 1: Single employer with correct wage tax
+            [ owl:intersectionOf (
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasSingleEmployer ;
+                  owl:hasValue true ]
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasCorrectWageTax ;
+                  owl:hasValue true ]
+            ) ]
+            # Case 2: Tax refund conditions (any of these)
+            [ owl:unionOf (
+                # Different income levels without rolling-up
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasVaryingIncomeNoRollup ;
+                  owl:hasValue true ]
+                # Changed employer or partial year
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasEmployerChange ;
+                  owl:hasValue true ]
+                # Low pay with SV repayment eligibility
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasSVRepaymentEligibility ;
+                  owl:hasValue true ]
+                # Unclaimed tax credits
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasUnclaimedTaxCredits ;
+                  owl:hasValue true ]
+                # Unclaimed deductions or expenses
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasUnclaimedDeductions ;
+                  owl:hasValue true ]
+            ) ]
+        ) ]
+    )
+] .
+
+# Mandatory E1 Filing Rule
+:MandatoryE1Filer owl:equivalentClass [
+    rdf:type owl:Class ;
+    owl:intersectionOf (
+        :AustrianResident
+        [ rdf:type owl:Restriction ;
+          owl:onProperty :hasOtherIncome ;
+          owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                             owl:onDatatype xsd:decimal ;
+                             owl:withRestrictions ( [ xsd:minExclusive "730.0"^^xsd:decimal ] ) ] ]
+    )
+] .
+
+# Simple employees with no special conditions have no filing requirement
+[ rdf:type owl:Class ;
+  owl:intersectionOf (
+    :SimpleEmployee
+    :NoFilingRequired
+  )
+] .
+
+#################################################################
+#    Test Case Individuals
+#################################################################
+
+### Test Case 1: Mandatory L1 - High Income with Incorrect Tax Credits
+:TestCase_MandatoryL1_HighIncome rdf:type :AustrianResident ;
+                                rdfs:label "Test: Mandatory L1 - High Income with Incorrect Credits"@en ;
+                                rdfs:comment "Austrian resident with income over €14,517 and incorrectly applied single-earner credit" ;
+                                :hasAnnualWageIncome "35000.0"^^xsd:decimal ;
+                                :hasOtherIncome "0.0"^^xsd:decimal ;
+                                :hasIncorrectTaxCredits true ;
+                                :hasMultipleEmployments false ;
+                                :hasSpecialPaymentSituations false ;
+                                :hasNoWageTax false ;
+                                :hasIncorrectCommuterAllowance false ;
+                                :hasIncorrectFamilyBonus false ;
+                                :hasDiscretionaryAssessment false .
+
+### Test Case 2: Mandatory L1 - Multiple Employments
+:TestCase_MandatoryL1_MultipleJobs rdf:type :AustrianResident ;
+                                  rdfs:label "Test: Mandatory L1 - Multiple Employments"@en ;
+                                  rdfs:comment "Austrian resident with two jobs totaling €45,000" ;
+                                  :hasAnnualWageIncome "45000.0"^^xsd:decimal ;
+                                  :hasOtherIncome "0.0"^^xsd:decimal ;
+                                  :hasMultipleEmployments true ;
+                                  :hasIncorrectTaxCredits false ;
+                                  :hasSpecialPaymentSituations false ;
+                                  :hasNoWageTax false ;
+                                  :hasIncorrectCommuterAllowance false ;
+                                  :hasIncorrectFamilyBonus false ;
+                                  :hasDiscretionaryAssessment false .
+
+### Test Case 3: Mandatory E1 - Self-Employment Income
+:TestCase_MandatoryE1_SelfEmployed rdf:type :AustrianResident ;
+                                  rdfs:label "Test: Mandatory E1 - Self-Employment Income"@en ;
+                                  rdfs:comment "Austrian resident with freelance income €25,000" ;
+                                  :hasAnnualWageIncome "0.0"^^xsd:decimal ;
+                                  :hasOtherIncome "25000.0"^^xsd:decimal ;
+                                  :hasSelfEmploymentIncome true ;
+                                  :hasMultipleEmployments false ;
+                                  :hasIncorrectTaxCredits false ;
+                                  :hasSpecialPaymentSituations false .
+
+### Test Case 4: Voluntary L1 - Single Employer with Correct Tax
+:TestCase_VoluntaryL1_SingleEmployer rdf:type :AustrianResident ;
+                                    rdfs:label "Test: Voluntary L1 - Single Employer"@en ;
+                                    rdfs:comment "Austrian resident with single employer and correct wage tax" ;
+                                    :hasAnnualWageIncome "40000.0"^^xsd:decimal ;
+                                    :hasOtherIncome "0.0"^^xsd:decimal ;
+                                    :hasSingleEmployer true ;
+                                    :hasCorrectWageTax true ;
+                                    :hasVaryingIncomeNoRollup false ;
+                                    :hasEmployerChange false ;
+                                    :hasSVRepaymentEligibility false ;
+                                    :hasUnclaimedTaxCredits false ;
+                                    :hasUnclaimedDeductions false .
+
+### Test Case 5: Voluntary L1 - Tax Refund Expected
+:TestCase_VoluntaryL1_Refund rdf:type :AustrianResident ;
+                            rdfs:label "Test: Voluntary L1 - Tax Refund"@en ;
+                            rdfs:comment "Austrian resident with varying income levels without rollup" ;
+                            :hasAnnualWageIncome "30000.0"^^xsd:decimal ;
+                            :hasOtherIncome "0.0"^^xsd:decimal ;
+                            :hasSingleEmployer true ;
+                            :hasCorrectWageTax true ;
+                            :hasVaryingIncomeNoRollup true ;
+                            :hasEmployerChange false ;
+                            :hasSVRepaymentEligibility false ;
+                            :hasUnclaimedTaxCredits false ;
+                            :hasUnclaimedDeductions false .
+
+### Test Case 6: Additional Mandatory L1 - No Wage Tax
+:TestCase_MandatoryL1_NoWageTax rdf:type :AustrianResident ;
+                                rdfs:label "Test: Additional Mandatory L1 - No Wage Tax"@en ;
+                                rdfs:comment "Austrian resident with income above €13,308 but no wage tax withheld" ;
+                                :hasAnnualWageIncome "15000.0"^^xsd:decimal ;
+                                :hasOtherIncome "0.0"^^xsd:decimal ;
+                                :hasNoWageTax true ;
+                                :hasMultipleEmployments false ;
+                                :hasIncorrectTaxCredits false ;
+                                :hasSpecialPaymentSituations false ;
+                                :hasIncorrectCommuterAllowance false ;
+                                :hasIncorrectFamilyBonus false ;
+                                :hasDiscretionaryAssessment false .
+
+### Test Case 7: Voluntary L1 - Unclaimed Deductions
+:TestCase_VoluntaryL1_Deductions rdf:type :AustrianResident ;
+                                rdfs:label "Test: Voluntary L1 - Unclaimed Deductions"@en ;
+                                rdfs:comment "Austrian resident with unclaimed special expenses" ;
+                                :hasAnnualWageIncome "35000.0"^^xsd:decimal ;
+                                :hasOtherIncome "0.0"^^xsd:decimal ;
+                                :hasSingleEmployer true ;
+                                :hasCorrectWageTax true ;
+                                :hasVaryingIncomeNoRollup false ;
+                                :hasEmployerChange false ;
+                                :hasSVRepaymentEligibility false ;
+                                :hasUnclaimedTaxCredits false ;
+                                :hasUnclaimedDeductions true .
+
+### Test Case 8: No Filing Required
+:TestCase_NoFiling rdf:type :AustrianResident ;
+                   rdfs:label "Test: No Filing Required"@en ;
+                   rdfs:comment "Austrian resident with simple employment below threshold" ;
+                   :hasAnnualWageIncome "12000.0"^^xsd:decimal ;
+                   :hasOtherIncome "0.0"^^xsd:decimal ;
+                   :hasSingleEmployer true ;
+                   :hasCorrectWageTax true ;
+                   :hasMultipleEmployments false ;
+                   :hasIncorrectTaxCredits false ;
+                   :hasSpecialPaymentSituations false ;
+                   :hasNoWageTax false ;
+                   :hasIncorrectCommuterAllowance false ;
+                   :hasIncorrectFamilyBonus false ;
+                   :hasDiscretionaryAssessment false ;
+                   :hasVaryingIncomeNoRollup false ;
+                   :hasEmployerChange false ;
+                   :hasSVRepaymentEligibility false ;
+                   :hasUnclaimedTaxCredits false ;
+                   :hasUnclaimedDeductions false .
+
+# Add new data properties for voluntary filing conditions
+:hasEmployerChange rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :AustrianResident ;
+                   rdfs:range xsd:boolean ;
+                   rdfs:label "has employer change"@en ;
+                   rdfs:comment "Indicates if employee changed employer or was not employed for whole year."@en .
+
+:hasSVRepaymentEligibility rdf:type owl:DatatypeProperty ;
+                           rdfs:domain :AustrianResident ;
+                           rdfs:range xsd:boolean ;
+                           rdfs:label "has SV repayment eligibility"@en ;
+                           rdfs:comment "Indicates eligibility for SV repayment due to low pay."@en .

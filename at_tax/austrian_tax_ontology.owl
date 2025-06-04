@@ -1,0 +1,1253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns="http://example.org/austrian-tax#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#InvestmentIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#Income"/>
+    <rdfs:label xml:lang="en">Investment Income</rdfs:label>
+    <rdfs:label xml:lang="de">Einkünfte aus Kapitalvermögen</rdfs:label>
+    <rdfs:comment xml:lang="en">Returns from capital investments, subject to special tax treatment under the Austrian investment income tax system.
+
+Since 2012, most investment income is subject to final withholding tax (Endbesteuerung):
+- 27.5% on dividends, interest, capital gains from securities
+- 25% on bank deposits and savings accounts
+- No inclusion in progressive income tax calculation (opting for standard assessment possible)
+
+2025 Filing Requirements:
+- Foreign capital income subject to 27.5% rate but not covered by Austrian withholding tax (KESt) requires filing
+- Special rules for substantial shareholdings (&gt;1% or &gt;€730,000 acquisition cost)
+- Form E1kv required for capital income not fully settled by withholding</rdfs:comment>
+    <skos:example>Stock dividends, bond interest, capital gains from securities sales, foreign investment income</skos:example>
+    <legalBasis>EStG §27 (Capital income), EStG §95 (Final withholding tax)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab31">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">14517.0</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#EmploymentIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#WageTaxLiableIncome"/>
+    <rdfs:label xml:lang="en">Employment Income</rdfs:label>
+    <rdfs:label xml:lang="de">Einkünfte aus nichtselbständiger Arbeit</rdfs:label>
+    <rdfs:comment xml:lang="en">Income from dependent employment relationships, including salaries, wages, bonuses, and benefits.
+
+Key features:
+- Subject to payroll tax withholding (Lohnsteuer) by employer
+- Automatic deduction of €132 work-related expenses (Werbungskosten) unless higher expenses proven
+- Special rules for company cars, stock options, and other benefits-in-kind
+- 13th and 14th month payments (holiday and Christmas bonuses) taxed at reduced rates
+
+2025 Filing Requirements:
+- Multiple employment situations require filing if total income &gt;€14,517
+- Additional income &gt;€730 alongside employment triggers filing requirements
+- Foreign employment income may be exempt under double taxation treaties</rdfs:comment>
+    <skos:example>Monthly salary, overtime pay, company car benefit, stock options, director's fees</skos:example>
+    <legalBasis>EStG §25 (Employment income), EStG §67 (Payroll tax withholding)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#SelfEmployedEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab36"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#MustFileReturn"/>
+    <rdfs:label xml:lang="en">Self-Employed Entity</rdfs:label>
+    <rdfs:label xml:lang="de">Selbständig Tätige</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities with self-employment income who must file tax returns regardless of income amount.
+
+2025 Enhanced Requirements: Self-employed individuals must:
+- File electronically via FinanzOnline unless technically impossible
+- Submit Form E1 with attachment E1a for business income/expenditure
+- Make quarterly advance payments if annual tax exceeds €3,900
+- Maintain detailed business records and documentation
+- File even for loss years to establish legal evidence for loss carryforwards
+
+This applies to all categories of self-employed including new self-employed persons and freelancers.</rdfs:comment>
+    <legalBasis>EStG §42 Abs 1 Z 3 (Assessment obligation for self-employed), Electronic filing requirements</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab54">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAnnualIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab55"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasWageTaxLiableIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="en">has wage tax liable income</rdfs:label>
+    <rdfs:label xml:lang="de">hat lohnsteuerpflichtige Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">The portion of income subject to wage tax withholding (Lohnsteuer).
+
+This property is crucial for applying 2025 filing thresholds:
+- If &gt;€0, the €14,517 threshold applies for filing requirements
+- Combined with additional non-wage income &gt;€730 triggers filing obligation
+- Multiple wage sources may require filing even if individual amounts are below thresholds
+
+Wage tax liable income primarily consists of employment income with automatic tax withholding.</rdfs:comment>
+    <skos:note>Amount in EUR. Essential for determining 2025 filing requirements.</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#HighIncomeNonWageResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab1"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#MustFileReturn"/>
+    <rdfs:label xml:lang="en">High Income Non-Wage Resident</rdfs:label>
+    <rdfs:label xml:lang="de">Einkommenstarker Inländer ohne Lohnsteuer</rdfs:label>
+    <rdfs:comment xml:lang="en">Austrian tax residents with annual income ≥€13,308 from non-wage tax liable sources who must file.
+
+2025 Threshold Update: The filing threshold for residents without wage tax liable income 
+has increased to €13,308. This applies to income from:
+- Self-employment and business activities
+- Rental and leasing income
+- Investment income not subject to final withholding
+- Other non-employment income sources
+
+This threshold ensures comprehensive tax assessment for significant non-employment income.</rdfs:comment>
+    <legalBasis>EStG §42 Abs 1 (2025 assessment threshold for non-wage income)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab26">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab19"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#ResidentEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Austrian Tax Resident</rdfs:label>
+    <rdfs:label xml:lang="de">Österreichischer Steuerinländer</rdfs:label>
+    <rdfs:comment xml:lang="en">An entity with unlimited tax liability in Austria (unbeschränkte Steuerpflicht).
+
+For natural persons, tax residency is established by:
+1. Domicile (Wohnsitz) in Austria - place where person maintains a dwelling with intention to permanently reside
+2. Habitual residence (gewöhnlicher Aufenthalt) - staying in Austria for more than 6 months
+3. Austrian citizenship with close economic ties (even if residing abroad)
+
+Tax residents are subject to Austrian income tax on their worldwide income, but may claim foreign tax credits
+for taxes paid abroad under double taxation treaties.
+
+2025 Filing Requirements apply based on income thresholds and types.
+Special rules apply for individuals moving to/from Austria during a tax year (pro-rata taxation).</rdfs:comment>
+    <skos:example>Austrian citizen living in Vienna, German executive relocated to Austria for work, EU national residing in Austria &gt;6 months</skos:example>
+    <legalBasis>EStG §1 (Unlimited tax liability), BAO §26 (Domicile and habitual residence)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab29">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAnnualIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab30"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab46">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab48"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab14">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab13"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#WageTaxLiableIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#Income"/>
+    <rdfs:label xml:lang="en">Wage Tax Liable Income</rdfs:label>
+    <rdfs:label xml:lang="de">Lohnsteuerpflichtige Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Income subject to wage tax withholding (Lohnsteuer) by the payer.
+
+This primarily includes employment income where employers automatically withhold taxes.
+Special 2025 filing rules apply when wage tax liable income is combined with other income:
+- Filing required if total income &gt;€14,517 AND additional non-wage income &gt;€730
+- Multiple employment situations trigger filing requirements
+- Multiple pensions without joint tax deduction require filing
+
+The wage tax withholding system aims to settle tax liability automatically for simple employment cases.</rdfs:comment>
+    <skos:example>Monthly salary with automatic tax withholding, Director's fees with wage tax deduction</skos:example>
+    <legalBasis>EStG §25 (Employment income), EStG §67 (Wage tax withholding), EStG §42 (2025 filing thresholds)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasEmployer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#Person"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has employer</rdfs:label>
+    <rdfs:label xml:lang="de">hat Arbeitgeber</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates whether a person is in an employment relationship subject to payroll tax withholding.
+
+Employed individuals benefit from:
+- Automatic tax withholding and simplified filing
+- Standard work-related expense deduction (€132)
+- Access to employer-provided benefits
+- Possible exemption from filing requirements if tax fully withheld
+
+2025 Update: Multiple employers or mixed employment/self-employment typically requires filing.</rdfs:comment>
+    <skos:note>Subject to payroll tax withholding if true</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#TaxableEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Taxable Entity</rdfs:label>
+    <rdfs:label xml:lang="de">Steuerpflichtiges Subjekt</rdfs:label>
+    <rdfs:comment xml:lang="en">Any natural person, legal person, or other entity that may be subject to Austrian tax obligations.
+
+This includes Austrian residents, non-residents with Austrian-source income, businesses operating in Austria,
+and any other entity that may have Austrian tax filing requirements under the Income Tax Act (EStG) or
+Corporate Income Tax Act (KStG).
+
+The classification as a taxable entity does not automatically create a filing obligation - this depends on
+additional factors such as income thresholds, business activities, and specific legal provisions.
+
+2025 Update: Electronic filing via FinanzOnline is now mandatory unless technical impossibility can be demonstrated.</rdfs:comment>
+    <skos:example>Individual earning salary in Austria, German company with Austrian subsidiary, US investor with Austrian rental income</skos:example>
+    <legalBasis>EStG §1 (Tax liability), BAO §6 (Taxpayer definition)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasAccountKeepingObligation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has account-keeping obligation</rdfs:label>
+    <rdfs:label xml:lang="de">hat Buchführungspflicht</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates whether the entity is required to maintain formal accounting records.
+
+2025 Requirement: Account-keeping businesses must file tax returns regardless of income level.
+They must also submit:
+- Balance sheet (Bilanz)
+- Profit and loss account (Gewinn- und Verlustrechnung)
+- Electronic submission preferred ('e-accounts')
+
+This obligation typically applies to larger businesses and corporations.</rdfs:comment>
+    <skos:note>Boolean. Mandatory filing required regardless of income amount.</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasAdditionalIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="en">has additional income</rdfs:label>
+    <rdfs:label xml:lang="de">hat zusätzliche Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Additional income beyond primary wage tax liable income.
+
+For 2025 filing requirements: If an entity has wage tax liable income AND additional income &gt;€730,
+and total income &gt;€14,517, filing becomes mandatory.
+
+Additional income typically includes:
+- Self-employment income
+- Rental income  
+- Investment income not covered by withholding
+- Business income
+- Other miscellaneous income</rdfs:comment>
+    <skos:note>Amount in EUR. Critical €730 threshold for 2025 filing requirements.</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:label xml:lang="en">Austrian Tax Filing Requirements Ontology</rdfs:label>
+    <rdfs:label xml:lang="de">Österreichische Steuerpflicht-Ontologie</rdfs:label>
+    <rdfs:comment xml:lang="en">A comprehensive OWL 2 ontology for determining Austrian income tax filing obligations.
+                                   
+This ontology models the Austrian tax system (Einkommensteuer) and implements automated reasoning 
+to determine whether individuals, businesses, or other entities are required to file income tax 
+returns in Austria. It captures key provisions of the Austrian Income Tax Act (Einkommensteuergesetz - EStG)
+and related regulations.
+
+Key Features:
+- Automatic classification of taxpayers based on income, residency, and business activity
+- Implementation of Austrian tax thresholds and filing requirements (2025 updates)
+- Support for complex scenarios including multiple income sources and cross-border taxation
+- Reasoning capabilities for tax planning and compliance assessment
+- Electronic filing (FinanzOnline) requirements and procedures
+
+Legal Basis: Austrian Income Tax Act (EStG 1988), Federal Fiscal Code (BAO), 
+Double Taxation Treaties, EU Tax Directives
+
+Version: 2.0 (2025 Tax Year Updates)
+Last Updated: 2024</rdfs:comment>
+    <dc:creator>Austrian Tax Knowledge Graph Project</dc:creator>
+    <dc:subject>Austrian Tax Law, Income Tax, Tax Filing, Tax Compliance, 2025 Tax Year</dc:subject>
+    <owl:versionInfo>2.0</owl:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#isAustrianResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">is Austrian resident</rdfs:label>
+    <rdfs:label xml:lang="de">ist österreichischer Steuerinländer</rdfs:label>
+    <rdfs:comment xml:lang="en">Boolean indicator of Austrian tax residency status.
+
+True indicates unlimited tax liability (worldwide income taxation).
+False indicates limited tax liability (only Austrian source income).
+
+Residency determination considers domicile, habitual residence, citizenship, and economic ties.
+Changes during the year require pro-rata calculations.
+
+2025 Filing thresholds apply differently based on residency status.</rdfs:comment>
+    <skos:note>Determines scope of tax liability and applicable filing thresholds</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#MustFileReturn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Must File Tax Return</rdfs:label>
+    <rdfs:label xml:lang="de">Veranlagungspflichtig</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities with mandatory obligation to file an Austrian income tax return.
+
+2025 Filing Requirements - Filing is mandatory for:
+- Residents with non-wage income &gt;€13,308
+- Residents with wage income plus additional income &gt;€730 and total &gt;€14,517
+- Self-employed individuals regardless of income level
+- Multiple employment or pension situations with total &gt;€14,517
+- Account-keeping businesses regardless of income
+- Foreign capital income subject to 27.5% but not KESt
+- Private land sales per Section 30 EStG without property tax paid
+
+Filing deadlines:
+- Paper form: April 30 of following year
+- Electronic (FinanzOnline): June 30 of following year
+- Extensions possible with justification
+
+Late filing penalties apply for non-compliance.</rdfs:comment>
+    <skos:example>Self-employed consultant, High-income employee with rental income, Multiple job holder</skos:example>
+    <legalBasis>EStG §42 (Assessment obligation), BAO §134 (Filing deadlines)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#Partnership">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#Organization"/>
+    <rdfs:label xml:lang="en">Partnership</rdfs:label>
+    <rdfs:label xml:lang="de">Personengesellschaft</rdfs:label>
+    <rdfs:comment xml:lang="en">A business entity where partners share ownership and management responsibilities.
+
+In Austria, partnerships are generally transparent for tax purposes (fiscal transparency principle).
+The partnership itself typically doesn't pay income tax, but partners are taxed on their share of profits.
+
+Types include:
+- General Partnership (OG - Offene Gesellschaft)
+- Limited Partnership (KG - Kommanditgesellschaft)
+- Companies constituted under civil law (Gesellschaft bürgerlichen Rechts)
+- European Economic Interest Groupings (EEIGs)
+
+Partnerships must file Form E6, and individual partners must file Form E11.</rdfs:comment>
+    <skos:example>OG (General Partnership), KG (Limited Partnership), Law firm partnership, EEIG</skos:example>
+    <legalBasis>EStG §23 (Income from partnerships), EStG §188 (Partnership taxation)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasAnnualIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="en">has annual income</rdfs:label>
+    <rdfs:label xml:lang="de">hat Jahreseinkommen</rdfs:label>
+    <rdfs:comment xml:lang="en">The total annual income amount in EUR for tax assessment purposes.
+
+This represents the taxable income after allowable deductions and exemptions.
+For residents, this includes worldwide income; for non-residents, only Austrian source income.
+
+2025 Critical Thresholds:
+- €13,308: Filing threshold for non-wage tax liable income
+- €14,517: Filing threshold for wage tax liable income with additional income
+- €730: Minimum additional income threshold when combined with wage income
+
+The amount determines tax brackets, filing thresholds, and social security obligations.</rdfs:comment>
+    <skos:note>Amount in EUR, represents taxable income not gross revenue. Key for 2025 filing thresholds.</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#MultipleEmploymentResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab27"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#MustFileReturn"/>
+    <rdfs:label xml:lang="en">Multiple Employment Resident</rdfs:label>
+    <rdfs:label xml:lang="de">Mehrfachbeschäftigter Inländer</rdfs:label>
+    <rdfs:comment xml:lang="en">Residents with multiple employment relationships who must file if total income exceeds €14,517.
+
+2025 Multiple Employment Rule: Filing required for:
+- Two or more non-self-employed jobs held simultaneously
+- Multiple pension sources without joint tax deduction
+- Combined employment income exceeding €14,517
+
+Multiple income sources prevent accurate automatic tax withholding calculation.</rdfs:comment>
+    <legalBasis>EStG §42 Abs 1 (2025 multiple employment filing requirements)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab8">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab2"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab9"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab35">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab29"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasSelfEmploymentIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has self-employment income</rdfs:label>
+    <rdfs:label xml:lang="de">hat selbständige Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates income from independent business activities or professional services.
+
+2025 Mandatory Filing: Self-employed individuals must file annual tax returns regardless of income level.
+
+Self-employed individuals must:
+- File electronically via FinanzOnline unless technically impossible
+- Make quarterly advance tax payments if exceeding thresholds
+- Maintain proper business records and documentation
+- Register for VAT if turnover exceeds €30,000
+- Pay social security contributions for self-employed
+
+Includes both commercial businesses and independent professional services.</rdfs:comment>
+    <skos:note>Mandatory filing required regardless of income amount under 2025 rules</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#IndependentServicesIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#NonWageTaxLiableIncome"/>
+    <rdfs:label xml:lang="en">Independent Personal Services Income</rdfs:label>
+    <rdfs:label xml:lang="de">Einkünfte aus selbständiger Arbeit</rdfs:label>
+    <rdfs:comment xml:lang="en">Income from independent professional services and freelance activities.
+
+This includes:
+- Traditional professions (doctors, lawyers, architects, etc.)
+- New self-employed persons (Neue Selbständige)
+- Freelancers in various fields
+- Independent consultants and advisors
+
+Key features:
+- No trade tax liability (unlike commercial business income)
+- Professional service character rather than commercial trade
+- May qualify for simplified taxation schemes
+- Mandatory filing regardless of income amount
+
+2025 Updates: Enhanced focus on new self-employed categories and digital service providers.</rdfs:comment>
+    <skos:example>Medical practice income, Legal services fees, IT consulting, Freelance design work</skos:example>
+    <legalBasis>EStG §22 (Independent services), EStG §18 (Professional services definition)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#BusinessIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#NonWageTaxLiableIncome"/>
+    <rdfs:label xml:lang="en">Commercial Business Income</rdfs:label>
+    <rdfs:label xml:lang="de">Einkünfte aus Gewerbebetrieb</rdfs:label>
+    <rdfs:comment xml:lang="en">Profits from commercial business activities requiring regular, independent, and profit-oriented operations.
+
+Characteristics:
+- Calculated as business revenues minus deductible expenses
+- May require formal bookkeeping depending on size thresholds
+- Subject to advance tax payments (Vorauszahlungen) if exceeding €3,900 annually
+- Losses can generally be carried forward indefinitely
+- Account-keeping businesses must submit balance sheets and P&amp;L statements
+
+2025 Requirements:
+- All business income earners must file regardless of amount
+- Electronic filing via FinanzOnline mandatory
+- Form E1a required for standardized business income/expenditure layout</rdfs:comment>
+    <skos:example>Retail store profits, manufacturing company earnings, consulting business income</skos:example>
+    <legalBasis>EStG §22 (Commercial business income), EStG §4 (Profit calculation), EStG §44 (Account-keeping)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab51">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#isAustrianResident"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#Organization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Legal Entity</rdfs:label>
+    <rdfs:label xml:lang="de">Juristische Person</rdfs:label>
+    <rdfs:comment xml:lang="en">A legally recognized entity distinct from natural persons, subject to Austrian corporate taxes.
+
+Organizations include corporations, partnerships, foundations, associations, and other business entities.
+They may be subject to:
+- Corporate Income Tax (Körperschaftsteuer - KSt) at 25%
+- Minimum Tax (Mindeststeuer) of €3,500 for corporations
+- Various other taxes depending on business activities
+
+Foreign organizations with Austrian operations or income sources may have limited tax liability.
+Account-keeping businesses must submit balance sheets and profit-and-loss statements.</rdfs:comment>
+    <skos:example>Austrian GmbH, German AG with Austrian branch, International foundation with Austrian assets</skos:example>
+    <legalBasis>KStG §1 (Corporate tax liability), BAO §26 (Legal persons), EStG §44 (Account-keeping requirements)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab43">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab49"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#NonWageTaxLiableIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#Income"/>
+    <rdfs:label xml:lang="en">Non-Wage Tax Liable Income</rdfs:label>
+    <rdfs:label xml:lang="de">Nicht-lohnsteuerpflichtige Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Income not subject to automatic wage tax withholding.
+
+This includes most self-employment income, business profits, rental income, and investment income.
+2025 filing threshold: €13,308 for residents with only non-wage tax liable income.
+
+These income types typically require taxpayers to:
+- Calculate their own tax liability
+- Make quarterly advance payments if exceeding thresholds
+- Maintain proper records and documentation
+- File annual returns regardless of amount (for self-employed)</rdfs:comment>
+    <skos:example>Business profits, rental income, freelance fees, foreign investment income</skos:example>
+    <legalBasis>EStG §22-24, §26-29 (Various non-employment income types), EStG §42 (Filing thresholds)</legalBasis>
+    <owl:disjointWith rdf:resource="http://example.org/austrian-tax#WageTaxLiableIncome"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#AgricultureForestryIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#NonWageTaxLiableIncome"/>
+    <rdfs:label xml:lang="en">Agriculture and Forestry Income</rdfs:label>
+    <rdfs:label xml:lang="de">Einkünfte aus Land- und Forstwirtschaft</rdfs:label>
+    <rdfs:comment xml:lang="en">Income from agricultural and forestry operations.
+
+Features:
+- Special calculation methods including lump-sum taxation options
+- Specific deductions for agricultural expenses and investments
+- Environmental and sustainability incentives
+- Connection to EU agricultural policy
+
+2025 Requirements:
+- Form E1c required for lump-sum income calculation
+- Special consideration of EU agricultural subsidies
+- Environmental compliance reporting may be required</rdfs:comment>
+    <skos:example>Farm operations, Forest management, Agricultural product sales, Livestock breeding</skos:example>
+    <legalBasis>EStG §21 (Agriculture and forestry income)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#NoFilingRequired">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">No Filing Required</rdfs:label>
+    <rdfs:label xml:lang="de">Keine Veranlagungspflicht</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities with no obligation to file an Austrian income tax return.
+
+2025 No filing required for:
+- Residents with only wage income below €14,517 and no additional income &gt;€730
+- Residents with non-wage income below €13,308
+- Individuals whose tax was fully settled through withholding
+- Simple employment cases with proper wage tax withholding
+- Non-residents without Austrian source income
+
+These taxpayers may still file voluntarily if beneficial for refunds or deductions.</rdfs:comment>
+    <skos:example>Low-income employee, Simple employment case with proper withholding, Student with minimal income</skos:example>
+    <legalBasis>EStG §42 (Assessment obligation thresholds)</legalBasis>
+    <owl:disjointWith rdf:resource="http://example.org/austrian-tax#MandatoryFilingL1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasIncomeType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://example.org/austrian-tax#Income"/>
+    <rdfs:label xml:lang="en">has income type</rdfs:label>
+    <rdfs:label xml:lang="de">hat Einkunftsart</rdfs:label>
+    <rdfs:comment xml:lang="en">Associates a taxable entity with the specific types of income they receive.
+
+This property is crucial for determining tax treatment, as different income types have different:
+- Calculation methods (net vs. gross income)
+- Available deductions and expenses
+- Tax rates and withholding requirements
+- Filing and reporting obligations
+- 2025 thresholds for mandatory filing
+
+Multiple income types may apply to a single entity, which often triggers mandatory filing requirements.</rdfs:comment>
+    <skos:example>Person hasIncomeType EmploymentIncome, Corporation hasIncomeType BusinessIncome</skos:example>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#ForeignCapitalIncomeEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab38"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#MustFileReturn"/>
+    <rdfs:label xml:lang="en">Foreign Capital Income Entity</rdfs:label>
+    <rdfs:label xml:lang="de">Ausländisches Kapitalvermögen</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities with foreign capital investment income subject to 27.5% tax rate but not covered by Austrian withholding tax.
+
+2025 Filing Requirement: Investment income from foreign sources that:
+- Would be subject to 27.5% rate if domestic
+- Has not had Austrian capital yields tax (KESt) withheld
+- Requires comprehensive assessment for proper taxation
+
+Form E1kv required for such capital income reporting.</rdfs:comment>
+    <legalBasis>EStG §27 (Capital income), EStG §95 (Withholding tax coverage)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab65">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab54"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab66"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasAge">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#Person"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:label xml:lang="en">has age</rdfs:label>
+    <rdfs:label xml:lang="de">hat Alter</rdfs:label>
+    <rdfs:comment xml:lang="en">The age of a natural person, relevant for various tax provisions.
+
+Age affects:
+- Pension contribution requirements and limits
+- Special deductions for seniors (Seniorenabsetzbetrag)
+- Child tax credits and family allowances (Family Bonus Plus)
+- Mandatory health insurance thresholds
+- Early retirement tax implications
+
+Calculated as of December 31 of the tax year.</rdfs:comment>
+    <skos:note>Age as of December 31 of the tax year</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab49">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab44"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab50"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab55">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab57"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#AustrianSourceIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#Income"/>
+    <rdfs:label xml:lang="en">Austrian Source Income</rdfs:label>
+    <rdfs:label xml:lang="de">Österreichische Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Income that originates from Austrian sources and creates Austrian tax liability for non-residents.
+
+Austrian source income includes:
+- Employment services performed in Austria
+- Business operations through permanent establishment in Austria
+- Real estate located in Austria
+- Capital income from Austrian payers (subject to withholding)
+- Professional services performed in Austria
+
+Double taxation treaties may modify source rules and provide exemptions or reduced tax rates.
+Special rules apply for EU Member State traders operating in Austria.</rdfs:comment>
+    <skos:example>Salary from Austrian employer, Profits from Austrian branch, Rental from Austrian property</skos:example>
+    <legalBasis>EStG §98 (Austrian source income for non-residents), Double taxation treaties</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#legalBasis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:label>Legal Basis</rdfs:label>
+    <rdfs:comment>References to Austrian tax law provisions supporting this definition</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab41">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab39"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab42"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab44">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasIncomeType"/>
+    <owl:someValuesFrom rdf:resource="http://example.org/austrian-tax#RentalIncome"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#OptionalFiling">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Optional Filing</rdfs:label>
+    <rdfs:label xml:lang="de">Antragsveranlagung</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities who may voluntarily file a tax return even when not required.
+
+Optional filing may be beneficial to:
+- Claim refunds of excess withholding tax
+- Deduct higher work-related or special expenses
+- Utilize loss carryovers from previous years
+- Apply for tax credits not automatically granted (Family Bonus Plus, etc.)
+
+2025 Updates:
+- Optional returns must be filed within 5 years of the end of the tax year
+- Electronic filing preferred but paper forms available
+- Once filed, the tax assessment becomes binding
+- Entrepreneurs should file even for loss years to establish legal evidence for loss carryforwards</rdfs:comment>
+    <skos:example>Employee with high deductible expenses, Investor seeking refund of excess withholding tax, Entrepreneur with business losses</skos:example>
+    <legalBasis>EStG §41 (Voluntary assessment), EStG §124 (Refund claims)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab33">
+    <rdf:first rdf:resource="http://example.org/austrian-tax#ResidentEntity"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab34"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#OtherIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#NonWageTaxLiableIncome"/>
+    <rdfs:label xml:lang="en">Other Income</rdfs:label>
+    <rdfs:label xml:lang="de">Sonstige Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Miscellaneous income that doesn't fit into the other six categories.
+
+This catch-all category includes:
+- Occasional services and activities
+- Certain types of royalties and licensing income
+- Income from temporary activities
+- Specific types of gains and benefits
+
+Generally subject to the €730 annual exemption threshold for filing requirements.</rdfs:comment>
+    <skos:example>Occasional consulting, Licensing royalties, Temporary project income</skos:example>
+    <legalBasis>EStG §29 (Other income)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#Corporation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#Organization"/>
+    <rdfs:label xml:lang="en">Corporation</rdfs:label>
+    <rdfs:label xml:lang="de">Kapitalgesellschaft</rdfs:label>
+    <rdfs:comment xml:lang="en">A legal entity with separate legal personality, including stock corporations (AG), 
+limited liability companies (GmbH), and similar entities.
+
+Austrian corporations are subject to:
+- Corporate income tax (KSt) at 25% on worldwide income
+- Minimum corporate tax of €3,500 annually
+- Group taxation rules for qualifying corporate groups
+- Participation exemption for qualifying shareholdings
+
+Filing deadline: Generally within 5 months after fiscal year end, extendable to 9 months with tax advisor representation.
+Must submit Form K (corporate income tax return) rather than personal income tax forms.</rdfs:comment>
+    <skos:example>GmbH (Limited Liability Company), AG (Stock Corporation), SE (European Company)</skos:example>
+    <legalBasis>KStG §1 (Corporate tax liability), KStG §7 (Tax rates), KStG §10 (Minimum tax)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasMultipleEmployments">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#Person"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has multiple employments</rdfs:label>
+    <rdfs:label xml:lang="de">hat mehrere Beschäftigungen</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates whether a person has multiple employment relationships simultaneously.
+
+2025 Filing Requirement: Multiple non-self-employed jobs held simultaneously require filing 
+if total income exceeds €14,517.
+
+This also applies to multiple pensions that haven't had tax jointly deducted by pension providers.
+The complexity of multiple income sources prevents accurate automatic tax withholding.</rdfs:comment>
+    <skos:note>Boolean. Triggers mandatory filing under 2025 rules if income &gt;€14,517.</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab23">
+    <rdf:first rdf:resource="http://example.org/austrian-tax#ResidentEntity"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab24"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab25">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab15"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab26"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab15">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAdditionalIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab16"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasDeductions">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="en">has deductions</rdfs:label>
+    <rdfs:label xml:lang="de">hat Abzugsbeträge</rdfs:label>
+    <rdfs:comment xml:lang="en">Total amount of allowable deductions in EUR that reduce taxable income.
+
+Common deductions include:
+- Work-related expenses (Werbungskosten) - standard €132 for employees
+- Special expenses (Sonderausgaben) like insurance premiums, donations
+- Extraordinary expenses (außergewöhnliche Belastungen) for medical costs, disasters
+- Childcare costs and family-related deductions
+- Professional development and education expenses
+
+2025 Update: Higher deductions may make voluntary filing beneficial even when not required.
+Family Bonus Plus and other credits may require specific forms (L1k).</rdfs:comment>
+    <skos:note>Amount in EUR, reduces taxable income base</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab12">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab14"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab60">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAdditionalIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab61"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#NonResidentEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Non-Resident Entity</rdfs:label>
+    <rdfs:label xml:lang="de">Beschränkt Steuerpflichtiger</rdfs:label>
+    <rdfs:comment xml:lang="en">An entity with limited tax liability in Austria (beschränkte Steuerpflicht).
+
+Non-residents are only taxed on specific types of Austrian-source income, including:
+- Employment income from Austrian employers
+- Business income from permanent establishments in Austria
+- Income from Austrian real estate
+- Certain investment income from Austrian sources
+- Directors' fees from Austrian companies
+
+Tax rates may differ from residents, and double taxation treaty provisions may apply.
+Withholding tax often applies to investment income paid to non-residents.
+Filing requirements depend on income type and amount, with special rules for EU Member State traders.</rdfs:comment>
+    <skos:example>German employee working in Austria, Swiss investor in Austrian stocks, Italian company with Austrian branch</skos:example>
+    <legalBasis>EStG §98 (Limited tax liability), Double taxation treaties</legalBasis>
+    <owl:disjointWith rdf:resource="http://example.org/austrian-tax#ResidentEntity"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab3">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab5"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab45">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAnnualIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab46"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab53">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab64"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#Person">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Natural Person</rdfs:label>
+    <rdfs:label xml:lang="de">Natürliche Person</rdfs:label>
+    <rdfs:comment xml:lang="en">An individual human being who may be subject to Austrian income tax (Einkommensteuer).
+
+Natural persons are subject to Austrian income tax if they:
+1. Have their domicile (Wohnsitz) or habitual residence (gewöhnlicher Aufenthalt) in Austria (unlimited tax liability)
+2. Are non-residents but have Austrian-source income (limited tax liability)
+3. Are Austrian citizens living abroad but maintain significant economic ties to Austria
+
+Income tax rates for natural persons range from 0% to 55% (including solidarity tax) depending on income level.
+
+2025 Filing Thresholds:
+- €13,308 for income without wage tax liability
+- €14,517 for income with wage tax liability plus additional income &gt;€730
+- Mandatory filing for self-employed regardless of amount</rdfs:comment>
+    <skos:example>Austrian employee earning €35,000 annually, German freelancer with Austrian clients, retiree receiving Austrian pension</skos:example>
+    <legalBasis>EStG §1 (Income tax liability for natural persons), EStG §33 (Tax rates), EStG §42 (2025 filing thresholds)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#RentalIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#NonWageTaxLiableIncome"/>
+    <rdfs:label xml:lang="en">Rental and Leasing Income</rdfs:label>
+    <rdfs:label xml:lang="de">Einkünfte aus Vermietung und Verpachtung</rdfs:label>
+    <rdfs:comment xml:lang="en">Income from renting or leasing real estate and movable property.
+
+Key aspects:
+- Calculated as rental revenues minus deductible expenses (repairs, management, financing costs)
+- Depreciation allowed for buildings and equipment
+- Special rules for vacation rentals and short-term lettings
+- Foreign rental income included in worldwide income for residents
+
+2025 Special Requirements:
+- Private sales of land per Section 30 EStG require filing if no property income tax paid
+- Form E1b required for rental income from developed or undeveloped land
+- Loss limitation rules may apply for certain types of rental activities</rdfs:comment>
+    <skos:example>Apartment rental, commercial property leasing, vacation home rental, private land sales</skos:example>
+    <legalBasis>EStG §28 (Rental and leasing income), EStG §30 (Private land sales)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab48">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab47"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab11">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasWageTaxLiableIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab12"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#SoleTrader">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#Person"/>
+    <rdfs:label xml:lang="en">Sole Trader</rdfs:label>
+    <rdfs:label xml:lang="de">Einzelunternehmer</rdfs:label>
+    <rdfs:comment xml:lang="en">An individual conducting business activities as a sole proprietor.
+
+Sole traders include:
+- Traditional business owners
+- New self-employed persons (Neue Selbständige)
+- Freelancers and independent professionals
+- Various service providers
+
+All sole traders must file income tax returns regardless of income level and are subject to:
+- Electronic filing requirements via FinanzOnline
+- Quarterly advance tax payments if exceeding €3,900 annually
+- Proper business record keeping
+- VAT registration if turnover exceeds €30,000</rdfs:comment>
+    <skos:example>Independent consultant, Restaurant owner, Freelance designer, New self-employed IT specialist</skos:example>
+    <legalBasis>EStG §22 (Commercial business income), EStG §23 (Independent personal services), EStG §42 (Filing obligation)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#AutomaticResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab51"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#ResidentEntity"/>
+    <rdfs:label xml:lang="en">Automatic Resident</rdfs:label>
+    <rdfs:label xml:lang="de">Automatischer Inländer</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities automatically classified as Austrian tax residents based on explicit residency determination.
+
+This classification triggers unlimited tax liability on worldwide income.
+Residents benefit from full access to deductions, credits, and treaty benefits,
+but must report and pay tax on all income sources globally.
+
+2025 filing thresholds apply based on income composition and amounts.</rdfs:comment>
+    <legalBasis>EStG §1 (Unlimited tax liability criteria)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab52">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#isAustrianResident"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab20">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab22"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab19">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAnnualIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab20"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#AccountKeepingBusiness">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab37"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#MustFileReturn"/>
+    <rdfs:label xml:lang="en">Account-Keeping Business</rdfs:label>
+    <rdfs:label xml:lang="de">Buchführungspflichtiges Unternehmen</rdfs:label>
+    <rdfs:comment xml:lang="en">Businesses required to maintain formal accounting records who must file regardless of income level.
+
+2025 Account-Keeping Requirements: These businesses must:
+- File income tax returns regardless of income amount
+- Submit balance sheet and profit-and-loss account
+- Use electronic submission preferred ('e-accounts')
+- Comply with formal bookkeeping standards
+
+This typically applies to larger businesses exceeding specific revenue or asset thresholds.</rdfs:comment>
+    <legalBasis>EStG §44 (Account-keeping and balance sheet attachment requirements)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab36">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasSelfEmploymentIncome"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab10">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab23"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab50">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab45"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab39">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasIncomeType"/>
+    <owl:someValuesFrom rdf:resource="http://example.org/austrian-tax#InvestmentIncome"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab2">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAnnualIncome"/>
+    <owl:someValuesFrom rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab13">
+    <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</xsd:minExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab9">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab6"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab58">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasSelfEmploymentIncome"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab27">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab33"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab18">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab17"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab16">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab18"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#AutomaticNonResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab52"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#NonResidentEntity"/>
+    <rdfs:label xml:lang="en">Automatic Non-Resident</rdfs:label>
+    <rdfs:label xml:lang="de">Automatischer Ausländer</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities automatically classified as non-residents with limited Austrian tax liability.
+
+Limited liability applies only to Austrian source income.
+Non-residents may have different tax rates, limited deductions,
+and are subject to withholding taxes on certain income types.
+
+Special rules apply for EU Member State traders operating in Austria.</rdfs:comment>
+    <legalBasis>EStG §98 (Limited tax liability), EU trader provisions</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasMultipleIncomeStreams">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has multiple income streams</rdfs:label>
+    <rdfs:label xml:lang="de">hat mehrere Einkunftsquellen</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates the presence of income from multiple sources or types.
+
+2025 Filing Requirements: Multiple income streams typically require filing when including:
+- Employment plus self-employment income
+- Income from multiple employers (&gt;€14,517 total)
+- Employment plus significant additional income (&gt;€730)
+- Business income plus rental income
+- Any combination exceeding automatic withholding capabilities
+
+Complexity increases tax compliance obligations and may affect available deductions.</rdfs:comment>
+    <skos:note>Often triggers mandatory filing requirements under 2025 thresholds</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#Income">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Income</rdfs:label>
+    <rdfs:label xml:lang="de">Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Revenue or earnings subject to Austrian income tax classification.
+
+Austrian tax law categorizes income into seven specific types (Einkunftsarten) per EStG §2:
+1. Agriculture and forestry (Land- und Forstwirtschaft)
+2. Commercial business (Gewerbebetrieb) 
+3. Independent personal services (selbständige Arbeit)
+4. Employment (nichtselbständige Arbeit)
+5. Capital assets (Kapitalvermögen)
+6. Rental and leasing (Vermietung und Verpachtung)
+7. Other income (sonstige Einkünfte)
+
+Each income type has specific calculation rules, deductions, and tax treatment.
+The distinction between wage tax liable and non-wage tax liable income is crucial for filing thresholds.</rdfs:comment>
+    <skos:example>Salary, business profits, rental income, investment dividends, freelance fees</skos:example>
+    <legalBasis>EStG §2 (Types of income), EStG §§21-29 (Specific income categories)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab61">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab63"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab67">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab59"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab68"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab57">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab56"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab40">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAustrianSourceIncome"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab37">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasAccountKeepingObligation"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#LowIncomeSimpleResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab53"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#OptionalFiling"/>
+    <rdfs:label xml:lang="en">Low Income Simple Resident</rdfs:label>
+    <rdfs:label xml:lang="de">Geringverdiener mit einfachen Einkünften</rdfs:label>
+    <rdfs:comment xml:lang="en">Austrian residents below filing thresholds with simple income situations who may benefit from voluntary filing.
+
+2025 Updated Criteria:
+- Annual income below €13,308 (non-wage) or below combined thresholds
+- No self-employment income
+- No multiple income streams
+- Additional income ≤€730 if any wage income
+
+Voluntary filing may be advantageous to:
+- Claim refunds of excess payroll tax withholding
+- Deduct higher work-related expenses than standard €132
+- Apply for Family Bonus Plus and other tax credits
+- Utilize previous year loss carryovers
+
+No penalty for not filing, but potential refunds are forfeit if not claimed within 5 years.</rdfs:comment>
+    <legalBasis>EStG §41 (Voluntary assessment), EStG §124 (Refund procedures), 2025 threshold updates</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab4">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">13308.0</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#PrivateLandSalesEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab43"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#MustFileReturn"/>
+    <rdfs:label xml:lang="en">Private Land Sales Entity</rdfs:label>
+    <rdfs:label xml:lang="de">Private Grundstücksveräußerung</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities with income from private sales of land per Section 30 EStG who must file.
+
+2025 Requirement: Filing mandatory for private land sales where:
+- Income derives from private sales as defined in Section 30 EStG
+- No property income tax has been paid on the transaction
+- Gain or income results from the sale
+
+This ensures proper taxation of real estate speculation gains.</rdfs:comment>
+    <legalBasis>EStG §30 (Private sales of land), Property income tax coordination</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab42">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab40"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab59">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasMultipleIncomeStreams"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab62">
+    <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">730.0</xsd:maxInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#hasAustrianSourceIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has Austrian source income</rdfs:label>
+    <rdfs:label xml:lang="de">hat österreichische Einkünfte</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates whether the entity receives income that qualifies as Austrian source.
+
+Critical for non-residents as it determines Austrian tax liability.
+Austrian source income creates filing obligations even for non-residents if exceeding thresholds.
+
+2025 Update: Special considerations apply for EU Member State traders operating in Austria.
+Double taxation treaties may modify source rules and provide relief from Austrian taxation.</rdfs:comment>
+    <skos:note>Determines Austrian tax liability for non-residents</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab66">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab58"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab67"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab34">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab28"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab35"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab24">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab11"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab25"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab56">
+    <xsd:maxExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">13308.0</xsd:maxExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab28">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasMultipleEmployments"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab63">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab62"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab30">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab32"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab64">
+    <rdf:first rdf:resource="http://example.org/austrian-tax#ResidentEntity"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab65"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab38">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab41"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#WageIncomeWithAdditionalResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:equivalentClass rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab10"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#MustFileReturn"/>
+    <rdfs:label xml:lang="en">Wage Income with Additional Income Resident</rdfs:label>
+    <rdfs:label xml:lang="de">Lohnbezieher mit Zusatzeinkommen</rdfs:label>
+    <rdfs:comment xml:lang="en">Residents with wage tax liable income who also have additional income &gt;€730 and total income &gt;€14,517.
+
+2025 Complex Threshold Rule: This captures the sophisticated interaction between wage and non-wage income:
+1. Must have wage tax liable income (employment with withholding)
+2. Must have additional non-wage income exceeding €730
+3. Total combined income must exceed €14,517
+
+This prevents automatic tax settlement through wage withholding and requires comprehensive assessment.</rdfs:comment>
+    <legalBasis>EStG §42 Abs 1 (2025 combined income thresholds)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab21">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">14517.0</xsd:minInclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab17">
+    <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">730.0</xsd:minExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/subject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab47">
+    <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</xsd:minExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab7">
+    <rdf:first rdf:resource="http://example.org/austrian-tax#ResidentEntity"/>
+    <rdf:rest rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab8"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#example">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab32">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab31"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#note">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/creator">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab22">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab21"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab6">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax#hasWageTaxLiableIncome"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab68">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab60"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab5">
+    <rdf:first rdf:nodeID="ne51f9494dbc44560b98c49c647b0c4bab4"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#MandatoryFilingL1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Mandatory Filing L1</rdfs:label>
+    <rdfs:label xml:lang="de">Veranlagungspflichtig L1</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities with mandatory obligation to file an Austrian income tax return.
+
+2025 Filing Requirements - Filing is mandatory for:
+- Residents with non-wage income &gt;€13,308
+- Residents with wage income plus additional income &gt;€730 and total &gt;€14,517
+- Self-employed individuals regardless of income level
+- Multiple employment or pension situations with total &gt;€14,517
+- Account-keeping businesses regardless of income
+- Foreign capital income subject to 27.5% but not KESt
+- Private land sales per Section 30 EStG without property tax paid
+
+Filing deadlines:
+- Paper form: April 30 of following year
+- Electronic (FinanzOnline): June 30 of following year
+- Extensions possible with justification
+
+Late filing penalties apply for non-compliance.</rdfs:comment>
+    <skos:example>Self-employed consultant, High-income employee with rental income, Multiple job holder</skos:example>
+    <legalBasis>EStG §42 (Assessment obligation), BAO §134 (Filing deadlines)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#MandatoryFilingE1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Mandatory Filing E1</rdfs:label>
+    <rdfs:label xml:lang="de">Veranlagungspflichtig E1</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities with mandatory obligation to file an Austrian income tax return.
+
+2025 Filing Requirements - Filing is mandatory for:
+- Residents with non-wage income &gt;€13,308
+- Residents with wage income plus additional income &gt;€730 and total &gt;€14,517
+- Self-employed individuals regardless of income level
+- Multiple employment or pension situations with total &gt;€14,517
+- Account-keeping businesses regardless of income
+- Foreign capital income subject to 27.5% but not KESt
+- Private land sales per Section 30 EStG without property tax paid
+
+Filing deadlines:
+- Paper form: April 30 of following year
+- Electronic (FinanzOnline): June 30 of following year
+- Extensions possible with justification
+
+Late filing penalties apply for non-compliance.</rdfs:comment>
+    <skos:example>Self-employed consultant, High-income employee with rental income, Multiple job holder</skos:example>
+    <legalBasis>EStG §42 (Assessment obligation), BAO §134 (Filing deadlines)</legalBasis>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax#VoluntaryFilingL1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://example.org/austrian-tax#TaxableEntity"/>
+    <rdfs:label xml:lang="en">Voluntary Filing L1</rdfs:label>
+    <rdfs:label xml:lang="de">Antragsveranlagung L1</rdfs:label>
+    <rdfs:comment xml:lang="en">Entities who may voluntarily file a tax return even when not required.
+
+Optional filing may be beneficial to:
+- Claim refunds of excess withholding tax
+- Deduct higher work-related or special expenses
+- Utilize loss carryovers from previous years
+- Apply for tax credits not automatically granted (Family Bonus Plus, etc.)
+
+2025 Updates:
+- Optional returns must be filed within 5 years of the end of the tax year
+- Electronic filing preferred but paper forms available
+- Once filed, the tax assessment becomes binding
+- Entrepreneurs should file even for loss years to establish legal evidence for loss carryforwards</rdfs:comment>
+    <skos:example>Employee with high deductible expenses, Investor seeking refund of excess withholding tax, Entrepreneur with business losses</skos:example>
+    <legalBasis>EStG §41 (Voluntary assessment), EStG §124 (Refund claims)</legalBasis>
+    <owl:disjointWith rdf:resource="http://example.org/austrian-tax#MandatoryFilingL1"/>
+  </rdf:Description>
+</rdf:RDF>
