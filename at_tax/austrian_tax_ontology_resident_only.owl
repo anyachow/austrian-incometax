@@ -1,16 +1,616 @@
-<?xml version="1.0"?>
-<rdf:RDF xmlns="http://example.org/austrian-tax-resident#"
-     xml:base="http://example.org/austrian-tax-resident"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:dcterms="http://purl.org/dc/terms/">
-    <owl:Ontology rdf:about="http://example.org/austrian-tax-resident">
-        <rdfs:label xml:lang="en">Austrian Tax Residents Income Tax Ontology</rdfs:label>
-        <rdfs:comment xml:lang="en">A comprehensive OWL 2 ontology for determining income tax filing obligations for Austrian tax residents.
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns="http://example.org/austrian-tax-resident#"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasSpecialPaymentSituations">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has special payment situations</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates receipt of sick pay, armed forces payments, service vouchers, etc.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b2">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#MandatoryFilingL1"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b23">
+    <owl:intersectionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b29"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_IncorrectCommuter">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory L1 - Incorrect Commuter Allowance</rdfs:label>
+    <rdfs:comment>Austrian resident with high wage income and incorrectly applied commuter allowance</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b22">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:unionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b40"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#AdditionalMandatoryL1Filer">
+    <owl:equivalentClass rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b22"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasMultipleEmployments">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has multiple employments</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates whether the taxpayer has simultaneous employment relationships with multiple employers.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_SpecialPayment">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory L1 - Special Payment Situations</rdfs:label>
+    <rdfs:comment>Austrian resident with wage income above threshold and special payment situations (e.g., sick pay, service vouchers)</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_DiscretionaryAssessment">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory L1 - Discretionary Assessment</rdfs:label>
+    <rdfs:comment>Austrian resident with wage income and a discretionary assessment included in salary calculation</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">17000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#MandatoryFilingE1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Mandatory Filing with form E1</rdfs:label>
+    <rdfs:comment xml:lang="en">Taxpayers required to file E1 tax return.
+                  Required when:
+                  - Additional non-employment income exceeds EUR 730
+                  - Excludes fully taxed capital yields</rdfs:comment>
+    <owl:equivalentClass rdf:resource="http://example.org/austrian-tax-resident#MandatoryE1Filer"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b11">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasIncorrectTaxCredits"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_NoWageTax">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Additional Mandatory L1 - No Wage Tax</rdfs:label>
+    <rdfs:comment>Austrian resident with income above €13,308 but no wage tax withheld</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasNoWageTax>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_VoluntaryL1_EmployerChange">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Voluntary L1 - Employer Change</rdfs:label>
+    <rdfs:comment>Austrian resident with employer change eligible for voluntary L1 filing</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSingleEmployer>
+    <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
+    <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasEmployerChange>
+    <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
+    <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
+    <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
+    <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#MandatoryE1Filer">
+    <owl:equivalentClass rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b65"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b30">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b24"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b31"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasDiscretionaryAssessment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has discretionary assessment</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if a discretionary assessment was included in salary calculation.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b29">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b30"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_HighIncome">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory L1 - High Income with Incorrect Credits</rdfs:label>
+    <rdfs:comment>Austrian resident with income over €14,517 and incorrectly applied single-earner credit</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasIncorrectTaxCredits>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasEmployerChange">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has employer change</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if employee changed employer or was not employed for whole year.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasNoWageTax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has no wage tax</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if the individual was not wage taxed at all.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_VoluntaryL1_Refund">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Voluntary L1 - Tax Refund</rdfs:label>
+    <rdfs:comment>Austrian resident with varying income levels without rollup</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
+    <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
+    <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasVaryingIncomeNoRollup>
+    <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
+    <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
+    <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
+    <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b21">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b10"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryE1_SelfEmployed">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory E1 - Self-Employment Income</rdfs:label>
+    <rdfs:comment>Austrian resident with freelance income €25,000</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25000.0</hasOtherIncome>
+    <hasSelfEmploymentIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSelfEmploymentIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b63">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b64"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b52">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasEmployerChange"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#VoluntaryL1Filer">
+    <owl:equivalentClass rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b43"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#AustrianResident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Austrian Tax Resident</rdfs:label>
+    <rdfs:comment xml:lang="en">A person subject to unlimited tax liability in Austria under §1 EStG.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasVaryingIncomeLevels">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has varying income levels</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if employee received different levels of income during the year.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b71">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b66"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_VoluntaryL1_SVRepayment">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Voluntary L1 - SV Repayment Eligibility</rdfs:label>
+    <rdfs:comment>Austrian resident eligible for SV repayment, can file voluntary L1</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
+    <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
+    <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSVRepaymentEligibility>
+    <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
+    <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
+    <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
+    <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b48">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b46"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b49"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b67">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b69"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#thresholdAmount">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:label xml:lang="en">threshold amount</rdfs:label>
+    <rdfs:comment xml:lang="en">Specific monetary threshold in EUR for 2025.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b35">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b33"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b53">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasSVRepaymentEligibility"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasUnclaimedDeductions">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has unclaimed deductions</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates presence of unclaimed income-related expenses, special expenses, or extraordinary burdens.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b42">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b36"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_VoluntaryL1_Deductions">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Voluntary L1 - Unclaimed Deductions</rdfs:label>
+    <rdfs:comment>Austrian resident with unclaimed special expenses</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
+    <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
+    <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
+    <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
+    <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
+    <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
+    <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasUnclaimedDeductions>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryE1_RentalIncome">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory E1 - Rental Income</rdfs:label>
+    <rdfs:comment>Austrian resident with rental income above €730 triggering mandatory E1 filing</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2000.0</hasOtherIncome>
+    <hasRentalIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasRentalIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasIncorrectCommuterAllowance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has incorrect commuter allowance</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if a lump sum for commuters was incorrectly applied.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b12">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasMultipleEmployments"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b68">
+    <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">730.0</xsd:minExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasOtherIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="en">has other income</rdfs:label>
+    <rdfs:comment xml:lang="en">Total annual income from non-wage sources (self-employment, rental, investment, etc.).</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b37">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasDiscretionaryAssessment"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasIncorrectTaxCredits">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has incorrect tax credits</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if tax credits were incorrectly applied in salary calculation.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasCorrectWageTax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has correct wage tax</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if wage tax was correctly withheld.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b19">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b20"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_MultipleJobs">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory L1 - Multiple Employments</rdfs:label>
+    <rdfs:comment>Austrian resident with two jobs totaling €45,000</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b28">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b27"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasVaryingIncomeNoRollup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has varying income without rollup</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if employee received different levels of income without rolling-up process.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_SimpleEmployee_Voluntary">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Simple Employee (Voluntary Filing Default)</rdfs:label>
+    <rdfs:comment>Austrian resident with simple employment below threshold, eligible for voluntary filing (default case)</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
+    <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+    <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
+    <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
+    <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
+    <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
+    <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasIncorrectFamilyBonus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has incorrect family bonus</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if Family Bonus Plus conditions were not met.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_IncorrectFamilyBonus">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory L1 - Incorrect Family Bonus</rdfs:label>
+    <rdfs:comment>Austrian resident with high wage income and incorrectly applied Family Bonus Plus</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasSVRepaymentEligibility">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has SV repayment eligibility</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates eligibility for SV repayment due to low pay.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasInvestmentIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has investment income</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates investment income above the €730 exemption threshold under §27 EStG.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b66">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasOtherIncome"/>
+    <owl:someValuesFrom rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b67"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b55">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasUnclaimedDeductions"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasSelfEmploymentIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has self-employment income</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates income from self-employment activities under §22 EStG.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b31">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b25"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b4">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#MandatoryFilingE1"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b34">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b35"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_VoluntaryL1_SingleEmployer">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Voluntary L1 - Single Employer</rdfs:label>
+    <rdfs:comment>Austrian resident with single employer and correct wage tax</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
+    <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
+    <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
+    <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
+    <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
+    <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
+    <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b33">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasSpecialPaymentSituations"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b43">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b63"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#TestCase_MandatoryL1_MultipleTriggers">
+    <rdf:type rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:label xml:lang="en">Test: Mandatory L1 - Multiple Triggers</rdfs:label>
+    <rdfs:comment>Austrian resident with high income, multiple employments, and incorrect tax credits</rdfs:comment>
+    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50000.0</hasAnnualWageIncome>
+    <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
+    <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasMultipleEmployments>
+    <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasIncorrectTaxCredits>
+    <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
+    <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
+    <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
+    <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
+    <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b16">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b12"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b17"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#taxYearApplicable">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:label xml:lang="en">tax year applicable</rdfs:label>
+    <rdfs:comment xml:lang="en">Tax year(s) for which this rule applies.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b62">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b50"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b51">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasVaryingIncomeNoRollup"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b6">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasAnnualWageIncome"/>
+    <owl:someValuesFrom rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b57">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b52"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b58"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b70">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b71"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#legalBasis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+    <rdfs:label xml:lang="en">legal basis</rdfs:label>
+    <rdfs:comment xml:lang="en">Reference to specific Austrian tax law provisions.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasAnnualWageIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="en">has annual wage income</rdfs:label>
+    <rdfs:comment xml:lang="en">Total annual wage/pension income subject to payroll tax withholding under §25 EStG.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#MandatoryFilingL1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Mandatory Filing with form L1</rdfs:label>
+    <rdfs:comment xml:lang="en">Taxpayers legally required to file L1 tax return under Austrian law.
+                  Required when:
+                  - Annual wage over 14,517 AND specific conditions are met
+                  - Tax credits or deductions incorrectly applied
+                  - Multiple simultaneous wage incomes
+                  - Special payment situations</rdfs:comment>
+    <owl:equivalentClass rdf:resource="http://example.org/austrian-tax-resident#MandatoryL1Filer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasRentalIncome">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has rental income</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates income from rental and leasing activities under §28 EStG.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b26">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b28"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b41">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b32"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b42"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#VoluntaryFilingL1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Voluntary Filing with form L1</rdfs:label>
+    <rdfs:comment xml:lang="en">Taxpayers who may benefit from voluntary filing with L1 form.
+                  Applicable for:
+                  - Single employer with correct wage tax withholding
+                  - Varying income levels without rolling-up
+                  - Employer changes or partial year employment
+                  - Low income SV repayment eligibility
+                  - Unclaimed tax credits or deductions</rdfs:comment>
+    <owl:equivalentClass rdf:resource="http://example.org/austrian-tax-resident#VoluntaryL1Filer"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b17">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b13"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b18"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b47">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasCorrectWageTax"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b38">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b39"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b8">
+    <xsd:minExclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">14517.0</xsd:minExclusive>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b10">
+    <owl:unionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b15"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b5">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b19"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b46">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasSingleEmployer"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b9">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b8"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b69">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b68"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/created">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:label xml:lang="en">Austrian Tax Residents Income Tax Ontology</rdfs:label>
+    <rdfs:comment xml:lang="en">A comprehensive OWL 2 ontology for determining income tax filing obligations for Austrian tax residents.
 
 This ontology implements the Austrian Income Tax Act (Einkommensteuergesetz - EStG) provisions for resident taxpayers, 
 providing automated reasoning capabilities to determine filing requirements based on income types and amounts.
@@ -21,476 +621,145 @@ SCOPE: Austrian tax residents only (persons with unlimited tax liability under �
 - Filing thresholds and requirements for tax year 2025
 - Automated classification of taxpayer categories
 
-VERSION: 2.1</rdfs:comment>
-        <owl:versionInfo>2.1</owl:versionInfo>
-    </owl:Ontology>
-
-    <!-- Data Properties -->
-
-    <owl:DatatypeProperty rdf:about="#hasAnnualWageIncome">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-        <rdfs:label xml:lang="en">has annual wage income</rdfs:label>
-        <rdfs:comment xml:lang="en">Total annual wage/pension income subject to payroll tax withholding under §25 EStG.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasOtherIncome">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-        <rdfs:label xml:lang="en">has other income</rdfs:label>
-        <rdfs:comment xml:lang="en">Total annual income from non-wage sources (self-employment, rental, investment, etc.).</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasIncorrectTaxCredits">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has incorrect tax credits</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if tax credits were incorrectly applied in salary calculation.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasMultipleEmployments">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has multiple employments</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates whether the taxpayer has simultaneous employment relationships with multiple employers.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasSpecialPaymentSituations">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has special payment situations</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates receipt of sick pay, armed forces payments, service vouchers, etc.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasNoWageTax">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has no wage tax</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if the individual was not wage taxed at all.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasIncorrectCommuterAllowance">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has incorrect commuter allowance</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if a lump sum for commuters was incorrectly applied.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasIncorrectFamilyBonus">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has incorrect family bonus</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if Family Bonus Plus conditions were not met.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasDiscretionaryAssessment">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has discretionary assessment</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if a discretionary assessment was included in salary calculation.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasSingleEmployer">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has single employer</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if employee has income solely from a single employer.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasCorrectWageTax">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has correct wage tax</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if wage tax was correctly withheld.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasVaryingIncomeNoRollup">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has varying income without rollup</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if employee received different levels of income without rolling-up process.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasEmployerChange">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has employer change</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if employee changed employer or was not employed for whole year.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasSVRepaymentEligibility">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has SV repayment eligibility</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates eligibility for SV repayment due to low pay.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasUnclaimedTaxCredits">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has unclaimed tax credits</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if entitled to unclaimed single-earner/single-parent tax credit or commuter allowance.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <owl:DatatypeProperty rdf:about="#hasUnclaimedDeductions">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has unclaimed deductions</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates presence of unclaimed income-related expenses, special expenses, or extraordinary burdens.</rdfs:comment>
-    </owl:DatatypeProperty>
-
-    <!-- Classes -->
-
-    <owl:Class rdf:about="#AustrianResident">
-        <rdfs:label xml:lang="en">Austrian Tax Resident</rdfs:label>
-        <rdfs:comment xml:lang="en">A person subject to unlimited tax liability in Austria under §1 EStG.</rdfs:comment>
-    </owl:Class>
-
-    <owl:Class rdf:about="#MandatoryFilingL1">
-        <rdfs:label xml:lang="en">Mandatory Filing with form L1</rdfs:label>
-        <rdfs:comment xml:lang="en">Taxpayers legally required to file L1 tax return under Austrian law.
-Required when:
-- Annual wage over 14,517 AND specific conditions are met
-- Tax credits or deductions incorrectly applied
-- Multiple simultaneous wage incomes
-- Special payment situations</rdfs:comment>
-    </owl:Class>
-
-    <owl:Class rdf:about="#VoluntaryFilingL1">
-        <rdfs:label xml:lang="en">Voluntary Filing with form L1</rdfs:label>
-        <rdfs:comment xml:lang="en">Taxpayers who may benefit from voluntary filing with L1 form.
-Applicable for:
-- Single employer with correct wage tax withholding
-- Varying income levels without rolling-up
-- Employer changes or partial year employment
-- Low income SV repayment eligibility
-- Unclaimed tax credits or deductions</rdfs:comment>
-    </owl:Class>
-
-    <owl:Class rdf:about="#NoFilingRequired">
-        <rdfs:label xml:lang="en">No Filing Required</rdfs:label>
-        <rdfs:comment xml:lang="en">Taxpayers who are not required to file a tax return.</rdfs:comment>
-    </owl:Class>
-
-    <owl:Class rdf:about="#MandatoryFilingE1">
-        <rdfs:label xml:lang="en">Mandatory Filing with form E1</rdfs:label>
-        <rdfs:comment xml:lang="en">Taxpayers required to file E1 tax return.
-Required when:
-- Additional non-employment income exceeds EUR 730
-- Excludes fully taxed capital yields</rdfs:comment>
-    </owl:Class>
-
-    <!-- Filing Requirement Rules -->
-
-    <owl:Class rdf:about="#MandatoryL1Filer">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="#AustrianResident"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="#hasAnnualWageIncome"/>
-                        <owl:someValuesFrom>
-                            <rdfs:Datatype>
-                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-                                <owl:withRestrictions rdf:parseType="Collection">
-                                    <rdf:Description>
-                                        <xsd:minExclusive>14517.0</xsd:minExclusive>
-                                    </rdf:Description>
-                                </owl:withRestrictions>
-                            </rdfs:Datatype>
-                        </owl:someValuesFrom>
-                    </owl:Restriction>
-                    <owl:Class>
-                        <owl:unionOf rdf:parseType="Collection">
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasIncorrectTaxCredits"/>
-                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                            </owl:Restriction>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasMultipleEmployments"/>
-                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                            </owl:Restriction>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasIncorrectCommuterAllowance"/>
-                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                            </owl:Restriction>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasIncorrectFamilyBonus"/>
-                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                            </owl:Restriction>
-                        </owl:unionOf>
-                    </owl:Class>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-    </owl:Class>
-
-    <owl:Class rdf:about="#AdditionalMandatoryL1Filer">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <owl:Class>
-                        <owl:intersectionOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="#AustrianResident"/>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasNoWageTax"/>
-                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                            </owl:Restriction>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasAnnualWageIncome"/>
-                                <owl:someValuesFrom>
-                                    <rdfs:Datatype>
-                                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-                                        <owl:withRestrictions rdf:parseType="Collection">
-                                            <rdf:Description>
-                                                <xsd:minInclusive>13308.0</xsd:minInclusive>
-                                            </rdf:Description>
-                                        </owl:withRestrictions>
-                                    </rdfs:Datatype>
-                                </owl:someValuesFrom>
-                            </owl:Restriction>
-                        </owl:intersectionOf>
-                    </owl:Class>
-                    <owl:Class>
-                        <owl:intersectionOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="#AustrianResident"/>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasSpecialPaymentSituations"/>
-                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                            </owl:Restriction>
-                        </owl:intersectionOf>
-                    </owl:Class>
-                    <owl:Class>
-                        <owl:intersectionOf rdf:parseType="Collection">
-                            <rdf:Description rdf:about="#AustrianResident"/>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="#hasDiscretionaryAssessment"/>
-                                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                            </owl:Restriction>
-                        </owl:intersectionOf>
-                    </owl:Class>
-                </owl:unionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-    </owl:Class>
-
-    <owl:Class rdf:about="#VoluntaryL1Filer">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="#AustrianResident"/>
-                    <owl:Class>
-                        <owl:unionOf rdf:parseType="Collection">
-                            <owl:Class>
-                                <owl:intersectionOf rdf:parseType="Collection">
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="#hasSingleEmployer"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="#hasCorrectWageTax"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                </owl:intersectionOf>
-                            </owl:Class>
-                            <owl:Class>
-                                <owl:unionOf rdf:parseType="Collection">
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="#hasVaryingIncomeNoRollup"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="#hasEmployerChange"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="#hasSVRepaymentEligibility"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="#hasUnclaimedTaxCredits"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="#hasUnclaimedDeductions"/>
-                                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
-                                    </owl:Restriction>
-                                </owl:unionOf>
-                            </owl:Class>
-                        </owl:unionOf>
-                    </owl:Class>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-    </owl:Class>
-
-    <owl:Class rdf:about="#MandatoryE1Filer">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="#AustrianResident"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="#hasOtherIncome"/>
-                        <owl:someValuesFrom>
-                            <rdfs:Datatype>
-                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-                                <owl:withRestrictions rdf:parseType="Collection">
-                                    <rdf:Description>
-                                        <xsd:minExclusive>730.0</xsd:minExclusive>
-                                    </rdf:Description>
-                                </owl:withRestrictions>
-                            </rdfs:Datatype>
-                        </owl:someValuesFrom>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-    </owl:Class>
-
-    <!-- Filing Requirement Assignments -->
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/07/owl#equivalentClass"/>
-    <rdf:Description rdf:about="#MandatoryFilingL1">
-        <owl:equivalentClass rdf:resource="#MandatoryL1Filer"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="#VoluntaryFilingL1">
-        <owl:equivalentClass rdf:resource="#VoluntaryL1Filer"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="#MandatoryFilingE1">
-        <owl:equivalentClass rdf:resource="#MandatoryE1Filer"/>
-    </rdf:Description>
-
-    <!-- Test Cases -->
-    
-    <!-- Test Case 1: Mandatory L1 - High Income with Incorrect Tax Credits -->
-    <rdf:Description rdf:about="#TestCase_MandatoryL1_HighIncome">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: Mandatory L1 - High Income with Incorrect Credits</rdfs:label>
-        <rdfs:comment>Austrian resident with income over €14,517 and incorrectly applied single-earner credit</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35000.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
-        <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasIncorrectTaxCredits>
-        <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
-        <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
-        <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
-        <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
-        <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
-        <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
-    </rdf:Description>
-
-    <!-- Test Case 2: Mandatory L1 - Multiple Employments -->
-    <rdf:Description rdf:about="#TestCase_MandatoryL1_MultipleJobs">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: Mandatory L1 - Multiple Employments</rdfs:label>
-        <rdfs:comment>Austrian resident with two jobs totaling €45,000</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45000.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
-        <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasMultipleEmployments>
-        <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
-        <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
-        <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
-        <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
-        <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
-        <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
-    </rdf:Description>
-
-    <!-- Test Case 3: Mandatory E1 - Self-Employment Income -->
-    <rdf:Description rdf:about="#TestCase_MandatoryE1_SelfEmployed">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: Mandatory E1 - Self-Employment Income</rdfs:label>
-        <rdfs:comment>Austrian resident with freelance income €25,000</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25000.0</hasOtherIncome>
-        <hasSelfEmploymentIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSelfEmploymentIncome>
-        <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
-        <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
-        <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
-    </rdf:Description>
-
-    <!-- Test Case 4: Voluntary L1 - Single Employer with Correct Tax -->
-    <rdf:Description rdf:about="#TestCase_VoluntaryL1_SingleEmployer">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: Voluntary L1 - Single Employer</rdfs:label>
-        <rdfs:comment>Austrian resident with single employer and correct wage tax</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40000.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
-        <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
-        <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
-        <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
-        <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
-        <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
-        <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
-        <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
-    </rdf:Description>
-
-    <!-- Test Case 5: Voluntary L1 - Tax Refund Expected -->
-    <rdf:Description rdf:about="#TestCase_VoluntaryL1_Refund">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: Voluntary L1 - Tax Refund</rdfs:label>
-        <rdfs:comment>Austrian resident with varying income levels without rollup</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30000.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
-        <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
-        <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
-        <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasVaryingIncomeNoRollup>
-        <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
-        <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
-        <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
-        <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
-    </rdf:Description>
-
-    <!-- Test Case 6: Additional Mandatory L1 - No Wage Tax -->
-    <rdf:Description rdf:about="#TestCase_MandatoryL1_NoWageTax">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: Additional Mandatory L1 - No Wage Tax</rdfs:label>
-        <rdfs:comment>Austrian resident with income above €13,308 but no wage tax withheld</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15000.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
-        <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasNoWageTax>
-        <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
-        <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
-        <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
-        <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
-        <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
-        <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
-    </rdf:Description>
-
-    <!-- Test Case 7: Voluntary L1 - Unclaimed Deductions -->
-    <rdf:Description rdf:about="#TestCase_VoluntaryL1_Deductions">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: Voluntary L1 - Unclaimed Deductions</rdfs:label>
-        <rdfs:comment>Austrian resident with unclaimed special expenses</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35000.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
-        <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
-        <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
-        <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
-        <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
-        <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
-        <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
-        <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasUnclaimedDeductions>
-    </rdf:Description>
-
-    <!-- Test Case 8: No Filing Required -->
-    <rdf:Description rdf:about="#TestCase_NoFiling">
-        <rdf:type rdf:resource="#AustrianResident"/>
-        <rdfs:label xml:lang="en">Test: No Filing Required</rdfs:label>
-        <rdfs:comment>Austrian resident with simple employment below threshold</rdfs:comment>
-        <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12000.0</hasAnnualWageIncome>
-        <hasOtherIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasOtherIncome>
-        <hasSingleEmployer rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSingleEmployer>
-        <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
-        <hasMultipleEmployments rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasMultipleEmployments>
-        <hasIncorrectTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectTaxCredits>
-        <hasSpecialPaymentSituations rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSpecialPaymentSituations>
-        <hasNoWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasNoWageTax>
-        <hasIncorrectCommuterAllowance rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectCommuterAllowance>
-        <hasIncorrectFamilyBonus rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasIncorrectFamilyBonus>
-        <hasDiscretionaryAssessment rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasDiscretionaryAssessment>
-        <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasVaryingIncomeNoRollup>
-        <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasEmployerChange>
-        <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasSVRepaymentEligibility>
-        <hasUnclaimedTaxCredits rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedTaxCredits>
-        <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasUnclaimedDeductions>
-    </rdf:Description>
-
+VERSION: 2.1 (Fixed Consistency Issues)
+</rdfs:comment>
+    <owl:versionInfo>2.1</owl:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b60">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b55"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b59">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b54"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b60"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b56">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b51"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b57"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b25">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasAnnualWageIncome"/>
+    <owl:someValuesFrom rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b26"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasUnclaimedTaxCredits">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has unclaimed tax credits</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if entitled to unclaimed single-earner/single-parent tax credit or commuter allowance.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b40">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b23"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b41"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b13">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasIncorrectCommuterAllowance"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b7">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b9"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasSingleEmployer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/austrian-tax-resident#AustrianResident"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label xml:lang="en">has single employer</rdfs:label>
+    <rdfs:comment xml:lang="en">Indicates if employee has income solely from a single employer.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b3">
+    <rdf:first rdf:resource="http://example.org/austrian-tax-resident#VoluntaryFilingL1"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b4"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b24">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasNoWageTax"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b32">
+    <owl:intersectionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b34"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b65">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b70"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b54">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasUnclaimedTaxCredits"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b39">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b37"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/license">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b61">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b45"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b62"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/austrian-tax-resident#MandatoryL1Filer">
+    <owl:equivalentClass rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b5"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b49">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b47"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b14">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://example.org/austrian-tax-resident#hasIncorrectFamilyBonus"/>
+    <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b18">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b14"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b50">
+    <owl:unionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b56"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b15">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b11"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b16"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b64">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b44"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b45">
+    <owl:intersectionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b48"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b36">
+    <owl:intersectionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b38"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+    <owl:members rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/modified">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/subject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b44">
+    <owl:unionOf rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b61"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/creator">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b20">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b6"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b21"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b58">
+    <rdf:first rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b53"/>
+    <rdf:rest rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b59"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="n5774efb014a54bbd9c669fd64c697f47b27">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">13308.0</xsd:minInclusive>
+  </rdf:Description>
 </rdf:RDF>

@@ -62,6 +62,12 @@ class TaxReasoningEngine:
         self.ontology_path = ontology_path
         self.load_ontology()
         self.setup_reasoner()
+        # After loading the ontology
+        print("\nDEBUG: Classes present in the ontology:")
+        for s, p, o in self.graph.triples((None, OWL['Class'], None)):
+            print(f"Class: {s}")
+        for s, p, o in self.graph.triples((None, RDF.type, OWL.Class)):
+            print(f"Class: {s}")
     
     def load_ontology(self):
         """Load the OWL ontology from file"""
@@ -259,10 +265,9 @@ class TaxReasoningEngine:
         
         # Define filing requirement classes
         filing_classes = {
-            TAX.NoFilingRequired: "NoFilingRequired",
             TAX.MandatoryFilingL1: "MandatoryFilingL1",
-            TAX.MandatoryFilingE1: "MandatoryFilingE1",
-            TAX.VoluntaryFilingL1: "VoluntaryFilingL1"
+            TAX.VoluntaryFilingL1: "VoluntaryFilingL1",
+            TAX.MandatoryFilingE1: "MandatoryFilingE1"
         }
         
         # Track filing requirement
@@ -285,9 +290,6 @@ class TaxReasoningEngine:
                 elif class_uri == TAX.MandatoryFilingE1:
                     result["must_file"] = True
                     result["reasons"].append("Entity classified as 'Mandatory Filing E1'")
-                elif class_uri == TAX.NoFilingRequired:
-                    result["no_filing_required"] = True
-                    result["reasons"].append("Entity classified as 'No Filing Required'")
                 continue
             
             # Add other classes to inferred_classes
@@ -492,9 +494,6 @@ class TaxReasoningEngine:
                 elif class_uri == TAX.MandatoryFilingE1:
                     result["must_file"] = True
                     result["reasons"].append("Entity classified as 'Mandatory Filing E1'")
-                elif class_uri == TAX.NoFilingRequired:
-                    result["no_filing_required"] = True
-                    result["reasons"].append("Entity classified as 'No Filing Required'")
 
     def get_filing_class_uri(self, status):
         """Get the URI for a filing status class."""
@@ -533,7 +532,7 @@ class TaxReasoningEngine:
         # Get all inferred classes for the entity
         for _, _, class_uri in self.graph.triples((entity_uri, RDF.type, None)):
             if class_uri in [TAX.MandatoryL1Filer, TAX.AdditionalMandatoryL1Filer, 
-                           TAX.VoluntaryL1Filer, TAX.MandatoryE1Filer, TAX.NoFilingRequired]:
+                           TAX.VoluntaryL1Filer, TAX.MandatoryE1Filer]:
                 result["inferred_classes"].append(class_uri.split("#")[-1])
         
         # Determine filing requirement based on classifications
@@ -550,12 +549,14 @@ class TaxReasoningEngine:
             result["optional_filing"] = True
             result["reasons"].append("Entity classified as 'Voluntary Filing L1'")
         else:
-            result["filing_requirement"] = "NoFilingRequired"
-            result["no_filing_required"] = True
-            result["reasons"].append("Entity classified as 'No Filing Required'")
-            # Ensure NoFilingRequired is in inferred_classes
-            if "NoFilingRequired" not in result["inferred_classes"]:
-                result["inferred_classes"].append("NoFilingRequired")
+            result["filing_requirement"] = "VoluntaryFilingL1" # Default to Voluntary if no mandatory class
+            result["optional_filing"] = True
+            result["reasons"].append("Entity classified as 'Voluntary Filing L1' (default)")
+        
+        # If the default is VoluntaryFilingL1, ensure VoluntaryL1Filer is also in inferred_classes
+        if result["filing_requirement"] == "VoluntaryFilingL1":
+            if "VoluntaryL1Filer" not in result["inferred_classes"]:
+                result["inferred_classes"].append("VoluntaryL1Filer")
         
         return result
 

@@ -132,13 +132,13 @@ test_cases = {
             has_unclaimed_deductions=True
         )
     },
-    "TestCase_NoFiling": {
-        "description": "Austrian resident with simple employment below threshold",
-        "expected_filing": "NoFilingRequired",
-        "expected_classifications": ["NoFilingRequired"],
+    "TestCase_SimpleEmployee_Voluntary": {
+        "description": "Austrian resident with simple employment below threshold, eligible for voluntary filing (default case)",
+        "expected_filing": "VoluntaryFilingL1",
+        "expected_classifications": ["VoluntaryL1Filer"],
         "entity": TaxEntity(
-            id="TestCase_NoFiling",
-            name="Simple Employee Below Threshold",
+            id="TestCase_SimpleEmployee_Voluntary",
+            name="Simple Employee (Voluntary Filing Default)",
             entity_type="Person",
             annual_income=12000.0,
             is_austrian_resident=True,
@@ -156,6 +156,155 @@ test_cases = {
             has_sv_repayment_eligibility=False,
             has_unclaimed_tax_credits=False,
             has_unclaimed_deductions=False
+        )
+    },
+    "TestCase_MandatoryL1_SpecialPayment": {
+        "description": "Austrian resident with wage income above threshold and special payment situations (e.g., sick pay, service vouchers)",
+        "expected_filing": "MandatoryFilingL1",
+        "expected_classifications": ["AdditionalMandatoryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_MandatoryL1_SpecialPayment",
+            name="Special Payment Situations",
+            entity_type="Person",
+            annual_income=20000.0,
+            is_austrian_resident=True,
+            has_multiple_employments=False,
+            has_incorrect_tax_credits=False,
+            has_special_payment_situations=True,
+            has_no_wage_tax=False,
+            has_incorrect_commuter_allowance=False,
+            has_incorrect_family_bonus=False,
+            has_discretionary_assessment=False
+        )
+    },
+    "TestCase_MandatoryL1_IncorrectCommuter": {
+        "description": "Austrian resident with high wage income and incorrectly applied commuter allowance",
+        "expected_filing": "MandatoryFilingL1",
+        "expected_classifications": ["MandatoryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_MandatoryL1_IncorrectCommuter",
+            name="Incorrect Commuter Allowance",
+            entity_type="Person",
+            annual_income=25000.0,
+            is_austrian_resident=True,
+            has_multiple_employments=False,
+            has_incorrect_tax_credits=False,
+            has_special_payment_situations=False,
+            has_no_wage_tax=False,
+            has_incorrect_commuter_allowance=True,
+            has_incorrect_family_bonus=False,
+            has_discretionary_assessment=False
+        )
+    },
+    "TestCase_MandatoryL1_IncorrectFamilyBonus": {
+        "description": "Austrian resident with high wage income and incorrectly applied Family Bonus Plus",
+        "expected_filing": "MandatoryFilingL1",
+        "expected_classifications": ["MandatoryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_MandatoryL1_IncorrectFamilyBonus",
+            name="Incorrect Family Bonus",
+            entity_type="Person",
+            annual_income=18000.0,
+            is_austrian_resident=True,
+            has_multiple_employments=False,
+            has_incorrect_tax_credits=False,
+            has_special_payment_situations=False,
+            has_no_wage_tax=False,
+            has_incorrect_commuter_allowance=False,
+            has_incorrect_family_bonus=True,
+            has_discretionary_assessment=False
+        )
+    },
+    "TestCase_MandatoryL1_DiscretionaryAssessment": {
+        "description": "Austrian resident with wage income and a discretionary assessment included in salary calculation",
+        "expected_filing": "MandatoryFilingL1",
+        "expected_classifications": ["AdditionalMandatoryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_MandatoryL1_DiscretionaryAssessment",
+            name="Discretionary Assessment",
+            entity_type="Person",
+            annual_income=17000.0,
+            is_austrian_resident=True,
+            has_multiple_employments=False,
+            has_incorrect_tax_credits=False,
+            has_special_payment_situations=False,
+            has_no_wage_tax=False,
+            has_incorrect_commuter_allowance=False,
+            has_incorrect_family_bonus=False,
+            has_discretionary_assessment=True
+        )
+    },
+    "TestCase_MandatoryE1_RentalIncome": {
+        "description": "Austrian resident with rental income above €730 triggering mandatory E1 filing",
+        "expected_filing": "MandatoryFilingE1",
+        "expected_classifications": ["MandatoryE1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_MandatoryE1_RentalIncome",
+            name="Rental Income",
+            entity_type="Person",
+            annual_income=0.0,
+            other_income=2000.0,
+            is_austrian_resident=True,
+            has_multiple_employments=False,
+            has_incorrect_tax_credits=False,
+            has_special_payment_situations=False
+        )
+    },
+    "TestCase_VoluntaryL1_EmployerChange": {
+        "description": "Austrian resident with employer change eligible for voluntary L1 filing",
+        "expected_filing": "VoluntaryFilingL1",
+        "expected_classifications": ["VoluntaryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_VoluntaryL1_EmployerChange",
+            name="Employer Change",
+            entity_type="Person",
+            annual_income=25000.0,
+            is_austrian_resident=True,
+            has_single_employer=False,
+            has_correct_wage_tax=True,
+            has_employer_change=True,
+            has_varying_income_no_rollup=False,
+            has_sv_repayment_eligibility=False,
+            has_unclaimed_tax_credits=False,
+            has_unclaimed_deductions=False
+        )
+    },
+    "TestCase_VoluntaryL1_SVRepayment": {
+        "description": "Austrian resident eligible for SV repayment, can file voluntary L1",
+        "expected_filing": "VoluntaryFilingL1",
+        "expected_classifications": ["VoluntaryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_VoluntaryL1_SVRepayment",
+            name="SV Repayment Eligibility",
+            entity_type="Person",
+            annual_income=9000.0,
+            is_austrian_resident=True,
+            has_single_employer=True,
+            has_correct_wage_tax=True,
+            has_sv_repayment_eligibility=True,
+            has_employer_change=False,
+            has_varying_income_no_rollup=False,
+            has_unclaimed_tax_credits=False,
+            has_unclaimed_deductions=False
+        )
+    },
+    "TestCase_MandatoryL1_MultipleTriggers": {
+        "description": "Austrian resident with high income, multiple employments, and incorrect tax credits",
+        "expected_filing": "MandatoryFilingL1",
+        "expected_classifications": ["MandatoryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_MandatoryL1_MultipleTriggers",
+            name="Multiple Triggers",
+            entity_type="Person",
+            annual_income=50000.0,
+            is_austrian_resident=True,
+            has_multiple_employments=True,
+            has_incorrect_tax_credits=True,
+            has_special_payment_situations=False,
+            has_no_wage_tax=False,
+            has_incorrect_commuter_allowance=False,
+            has_incorrect_family_bonus=False,
+            has_discretionary_assessment=False
         )
     }
 }
