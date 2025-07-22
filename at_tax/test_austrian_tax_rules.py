@@ -306,12 +306,75 @@ test_cases = {
             has_incorrect_family_bonus=False,
             has_discretionary_assessment=False
         )
+    },
+    "TestCase_BothL1E1": {
+        "description": "Austrian resident with high wage income, incorrect tax credits, and other income above E1 threshold",
+        "expected_filing": "MandatoryFilingE1",
+        "expected_classifications": ["MandatoryL1Filer", "MandatoryE1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_BothL1E1",
+            name="High Income, Incorrect Credits, Other Income",
+            entity_type="Person",
+            annual_income=20000.0,
+            other_income=2000.0,
+            is_austrian_resident=True,
+            has_incorrect_tax_credits=True
+        )
+    },
+    "TestCase_MandatoryE1_Employment_SelfEmp": {
+        "description": "Austrian resident with employment income, self-employment income as a musician above €730.",
+        "expected_filing": "MandatoryFilingE1",
+        "expected_classifications": ["MandatoryE1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_MandatoryE1_Employment_SelfEmp",
+            name="Employment and Self-Employment",
+            entity_type="Person",
+            annual_income=25000.0,
+            other_income=2000.0,
+            is_austrian_resident=True,
+            has_self_employment_income=True,
+            has_multiple_employments=False,
+            has_incorrect_tax_credits=False,
+            has_special_payment_situations=False,
+            has_no_wage_tax=False,
+            has_incorrect_commuter_allowance=False,
+            has_incorrect_family_bonus=False,
+            has_discretionary_assessment=False
+        )
+    },
+    # New test case for the secretary scenario (TestCase 18)
+    "TestCase_VoluntaryL1_SpecialExpenses": {
+        "description": "A secretary with a single employer can file voluntarily to claim special expenses for a tax refund.",
+        "expected_filing": "VoluntaryFilingL1",
+        "expected_classifications": ["VoluntaryL1Filer"],
+        "entity": TaxEntity(
+            id="TestCase_VoluntaryL1_SpecialExpenses",
+            name="Secretary with Special Expenses",
+            entity_type="Person",
+            annual_income=32000.0,
+            other_income=0.0,
+            is_austrian_resident=True,
+            has_single_employer=True,
+            has_correct_wage_tax=True,
+            has_unclaimed_deductions=True,
+            has_varying_income_no_rollup=False,
+            has_employer_change=False,
+            has_sv_repayment_eligibility=False,
+            has_unclaimed_tax_credits=False,
+            has_multiple_employments=False,
+            has_incorrect_tax_credits=False,
+            has_special_payment_situations=False,
+            has_no_wage_tax=False,
+            has_incorrect_commuter_allowance=False,
+            has_incorrect_family_bonus=False,
+            has_discretionary_assessment=False
+        )
     }
 }
 
 def test_filing_requirements():
     """Test the tax filing requirements for various scenarios."""
-    engine = TaxReasoningEngine(ontology_path="austrian_tax_ontology_resident_only.ttl")
+    engine = TaxReasoningEngine(ontology_path="austrian_tax_ontology_resident_only.owl")
     
     print("\n=== Testing Tax Filing Requirements ===")
     print("=" * 100)

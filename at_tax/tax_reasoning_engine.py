@@ -56,7 +56,7 @@ class TaxReasoningEngine:
     Uses basic RDF inference to determine filing obligations.
     """
     
-    def __init__(self, ontology_path: str = "austrian_tax_ontology.ttl"):
+    def __init__(self, ontology_path: str = "austrian_tax_ontology_resident_only.owl"):
         """Initialize the reasoning engine with the ontology"""
         self.graph = Graph()
         self.ontology_path = ontology_path
@@ -72,14 +72,8 @@ class TaxReasoningEngine:
     def load_ontology(self):
         """Load the OWL ontology from file"""
         try:
-            # Detect format based on file extension
-            if self.ontology_path.endswith('.ttl'):
-                format_type = "turtle"
-            elif self.ontology_path.endswith('.owl'):
-                format_type = "xml"
-            else:
-                format_type = "turtle"  # default to turtle
-                
+            # Always use OWL/XML format
+            format_type = "xml"
             self.graph.parse(self.ontology_path, format=format_type)
             print(f"Loaded ontology from {self.ontology_path} (format: {format_type})")
             print(f"Graph contains {len(self.graph)} triples")
@@ -277,21 +271,22 @@ class TaxReasoningEngine:
         for _, _, class_uri in self.graph.triples((entity_uri, RDF.type, None)):
             if class_uri in base_classes:
                 continue
-            
             # Handle filing requirement classes
             if class_uri in filing_classes:
-                filing_requirement = filing_classes[class_uri]
-                if class_uri == TAX.MandatoryFilingL1:
-                    result["must_file"] = True
-                    result["reasons"].append("Entity classified as 'Mandatory Filing L1'")
-                elif class_uri == TAX.VoluntaryFilingL1:
-                    result["optional_filing"] = True
-                    result["reasons"].append("Entity classified as 'Voluntary Filing L1'")
-                elif class_uri == TAX.MandatoryFilingE1:
+                # Prioritize E1 > L1 > VoluntaryL1
+                if class_uri == TAX.MandatoryFilingE1:
+                    filing_requirement = filing_classes[class_uri]
                     result["must_file"] = True
                     result["reasons"].append("Entity classified as 'Mandatory Filing E1'")
+                elif class_uri == TAX.MandatoryFilingL1 and filing_requirement != "MandatoryFilingE1":
+                    filing_requirement = filing_classes[class_uri]
+                    result["must_file"] = True
+                    result["reasons"].append("Entity classified as 'Mandatory Filing L1'")
+                elif class_uri == TAX.VoluntaryFilingL1 and filing_requirement not in ["MandatoryFilingE1", "MandatoryFilingL1"]:
+                    filing_requirement = filing_classes[class_uri]
+                    result["optional_filing"] = True
+                    result["reasons"].append("Entity classified as 'Voluntary Filing L1'")
                 continue
-            
             # Add other classes to inferred_classes
             class_name = str(class_uri).split('#')[-1] if '#' in str(class_uri) else str(class_uri)
             result["inferred_classes"].append(class_name)
@@ -536,14 +531,14 @@ class TaxReasoningEngine:
                 result["inferred_classes"].append(class_uri.split("#")[-1])
         
         # Determine filing requirement based on classifications
-        if (entity_uri, RDF.type, TAX.MandatoryFilingL1) in self.graph:
-            result["filing_requirement"] = "MandatoryFilingL1"
-            result["must_file"] = True
-            result["reasons"].append("Entity classified as 'Mandatory Filing L1'")
-        elif (entity_uri, RDF.type, TAX.MandatoryFilingE1) in self.graph:
+        if (entity_uri, RDF.type, TAX.MandatoryFilingE1) in self.graph:
             result["filing_requirement"] = "MandatoryFilingE1"
             result["must_file"] = True
             result["reasons"].append("Entity classified as 'Mandatory Filing E1'")
+        elif (entity_uri, RDF.type, TAX.MandatoryFilingL1) in self.graph:
+            result["filing_requirement"] = "MandatoryFilingL1"
+            result["must_file"] = True
+            result["reasons"].append("Entity classified as 'Mandatory Filing L1'")
         elif (entity_uri, RDF.type, TAX.VoluntaryFilingL1) in self.graph:
             result["filing_requirement"] = "VoluntaryFilingL1"
             result["optional_filing"] = True

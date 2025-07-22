@@ -6,7 +6,7 @@
 # Test Case 1: Simple Employee
 :TestCase_SimpleEmployee rdf:type owl:NamedIndividual, :AustrianResident ;
     :hasAnnualWageIncome "25000.0"^^xsd:decimal ;
-    :hasMultipleEmployments "false"^^xsd:boolean ;
+    :hasMultipleEmploymentsWithoutJointTax "false"^^xsd:boolean ;
     :hasSelfEmploymentIncome "false"^^xsd:boolean ;
     :hasRentalIncome "false"^^xsd:boolean ;
     :hasInvestmentIncome "false"^^xsd:boolean ;
@@ -16,7 +16,7 @@
 # Test Case 2: Multiple Employments
 :TestCase_MultipleEmployments rdf:type owl:NamedIndividual, :AustrianResident ;
     :hasAnnualWageIncome "45000.0"^^xsd:decimal ;
-    :hasMultipleEmployments "true"^^xsd:boolean ;
+    :hasMultipleEmploymentsWithoutJointTax "true"^^xsd:boolean ;
     :hasSelfEmploymentIncome "false"^^xsd:boolean ;
     :hasRentalIncome "false"^^xsd:boolean ;
     :hasInvestmentIncome "false"^^xsd:boolean ;
@@ -26,7 +26,7 @@
 # Test Case 3: Wage With Additional Income
 :TestCase_WageWithAdditional rdf:type owl:NamedIndividual, :AustrianResident ;
     :hasAnnualWageIncome "35000.0"^^xsd:decimal ;
-    :hasMultipleEmployments "false"^^xsd:boolean ;
+    :hasMultipleEmploymentsWithoutJointTax "false"^^xsd:boolean ;
     :hasSelfEmploymentIncome "false"^^xsd:boolean ;
     :hasRentalIncome "false"^^xsd:boolean ;
     :hasInvestmentIncome "false"^^xsd:boolean ;
@@ -36,7 +36,7 @@
 # Test Case 4: Low Income Employee
 :TestCase_LowIncomeEmployee rdf:type owl:NamedIndividual, :AustrianResident ;
     :hasAnnualWageIncome "11000.0"^^xsd:decimal ;
-    :hasMultipleEmployments "false"^^xsd:boolean ;
+    :hasMultipleEmploymentsWithoutJointTax "false"^^xsd:boolean ;
     :hasSelfEmploymentIncome "false"^^xsd:boolean ;
     :hasRentalIncome "false"^^xsd:boolean ;
     :hasInvestmentIncome "false"^^xsd:boolean ;
@@ -46,7 +46,7 @@
 # Test Case 5: Exact Threshold
 :TestCase_ExactThreshold rdf:type owl:NamedIndividual, :AustrianResident ;
     :hasAnnualWageIncome "13308.0"^^xsd:decimal ;
-    :hasMultipleEmployments "false"^^xsd:boolean ;
+    :hasMultipleEmploymentsWithoutJointTax "false"^^xsd:boolean ;
     :hasSelfEmploymentIncome "false"^^xsd:boolean ;
     :hasRentalIncome "false"^^xsd:boolean ;
     :hasInvestmentIncome "false"^^xsd:boolean ;
@@ -56,9 +56,20 @@
 # Test Case 6: Above Threshold
 :TestCase_AboveThreshold rdf:type owl:NamedIndividual, :AustrianResident ;
     :hasAnnualWageIncome "15000.0"^^xsd:decimal ;
-    :hasMultipleEmployments "false"^^xsd:boolean ;
+    :hasMultipleEmploymentsWithoutJointTax "false"^^xsd:boolean ;
     :hasSelfEmploymentIncome "false"^^xsd:boolean ;
     :hasRentalIncome "false"^^xsd:boolean ;
     :hasInvestmentIncome "false"^^xsd:boolean ;
     :hasOtherIncome "800.0"^^xsd:decimal ;
+    :filingYear "2025"^^xsd:gYear . 
+
+# Test Case 17: High Income, Incorrect Credits, Other Income
+:TestCase_BothL1E1 rdf:type owl:NamedIndividual, :AustrianResident ;
+    :hasAnnualWageIncome "20000.0"^^xsd:decimal ;
+    :hasOtherIncome "2000.0"^^xsd:decimal ;
+    :hasIncorrectTaxCredits "true"^^xsd:boolean ;
+    :hasMultipleEmploymentsWithoutJointTax "false"^^xsd:boolean ;
+    :hasSelfEmploymentIncome "false"^^xsd:boolean ;
+    :hasRentalIncome "false"^^xsd:boolean ;
+    :hasInvestmentIncome "false"^^xsd:boolean ;
     :filingYear "2025"^^xsd:gYear . 
