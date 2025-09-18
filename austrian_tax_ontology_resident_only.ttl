@@ -199,61 +199,86 @@ dcterms:modified rdf:type owl:AnnotationProperty .
                   - Excludes fully taxed capital yields"""@en .
 
 #################################################################
-#    Classification Rules (OWL 2 Restrictions)
+# Priority hierarchy:
+# MandatoryE1Filer > MandatoryL1Filer > VoluntaryL1Filer
 #################################################################
 
+# Declare disjointness
+DisjointClasses(
+    :MandatoryE1Filer
+    :MandatoryL1Filer
+    :VoluntaryL1Filer
+)
+
+#################################################################
+# Mandatory E1 Filing Rule (highest priority)
+#################################################################
+:MandatoryE1Filer owl:equivalentClass [
+    rdf:type owl:Class ;
+    owl:intersectionOf (
+        :AustrianResident
+        [ rdf:type owl:Restriction ;
+          owl:onProperty :hasNonWageIncome ;
+          owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                               owl:onDatatype xsd:decimal ;
+                               owl:withRestrictions (
+                                 [ xsd:minExclusive "730.0"^^xsd:decimal ]
+                               ) ] ]
+    )
+] .
+
+#################################################################
+# Mandatory L1 Filing Rule (only if NOT E1)
+#################################################################
 :MandatoryL1Filer owl:equivalentClass [
     rdf:type owl:Class ;
-    owl:unionOf (
-        # Main case: Wage > 14,517 AND (any of the three triggers)
-        [ owl:intersectionOf (
-            :AustrianResident
-            [ rdf:type owl:Restriction ;
-              owl:onProperty :hasAnnualWageIncome ;
-              owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                 owl:onDatatype xsd:decimal ;
-                                 owl:withRestrictions ( [ xsd:minExclusive "14517.0"^^xsd:decimal ] ) ] ]
-            [ owl:unionOf (
+    owl:intersectionOf (
+        :AustrianResident
+        [ rdf:type owl:Class ; owl:complementOf :MandatoryE1Filer ]
+        [ owl:unionOf (
+            # Main case: Wage > 14,517 AND (any of the three triggers)
+            [ owl:intersectionOf (
                 [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasMultipleEmploymentsWithoutJointTax ;
-                  owl:hasValue true ]
-                [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasIncorrectCommuterAllowance ;
-                  owl:hasValue true ]
-                [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasIncorrectFamilyBonus ;
-                  owl:hasValue true ]
+                  owl:onProperty :hasAnnualWageIncome ;
+                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                       owl:onDatatype xsd:decimal ;
+                                       owl:withRestrictions (
+                                         [ xsd:minExclusive "14517.0"^^xsd:decimal ]
+                                       ) ] ]
+                [ owl:unionOf (
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasMultipleEmploymentsWithoutJointTax ;
+                      owl:hasValue true ]
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasIncorrectCommuterAllowance ;
+                      owl:hasValue true ]
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasIncorrectFamilyBonus ;
+                      owl:hasValue true ]
+                ) ]
             ) ]
-        ) ]
-        # Wage income above threshold but employment tax NOT filed
-        [ owl:intersectionOf (
-            :AustrianResident
-            [ rdf:type owl:Restriction ;
-              owl:onProperty :hasAnnualWageIncome ;
-              owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                 owl:onDatatype xsd:decimal ;
-                                 owl:withRestrictions ( [ xsd:minInclusive "13308.0"^^xsd:decimal ] ) ] ]
-            [ rdf:type owl:Restriction ;
-              owl:onProperty :hasFiledEmploymentTax ;
-              owl:hasValue false ]
-        ) ]
-        # Special payment situations
-        [ owl:intersectionOf (
-            :AustrianResident
+            # Wage income above threshold but employment tax NOT filed
+            [ owl:intersectionOf (
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasAnnualWageIncome ;
+                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                       owl:onDatatype xsd:decimal ;
+                                       owl:withRestrictions (
+                                         [ xsd:minInclusive "13308.0"^^xsd:decimal ]
+                                       ) ] ]
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasFiledEmploymentTax ;
+                  owl:hasValue false ]
+            ) ]
+            # Special payment situations
             [ rdf:type owl:Restriction ;
               owl:onProperty :hasSpecialPaymentSituations ;
               owl:hasValue true ]
-        ) ]
-        # Discretionary assessment
-        [ owl:intersectionOf (
-            :AustrianResident
+            # Discretionary assessment
             [ rdf:type owl:Restriction ;
               owl:onProperty :hasDiscretionaryAssessment ;
               owl:hasValue true ]
-        ) ]
-        # Incorrect tax credits
-        [ owl:intersectionOf (
-            :AustrianResident
+            # Incorrect tax credits
             [ rdf:type owl:Restriction ;
               owl:onProperty :hasIncorrectTaxCredits ;
               owl:hasValue true ]
@@ -261,11 +286,15 @@ dcterms:modified rdf:type owl:AnnotationProperty .
     )
 ] .
 
-# VoluntaryL1Filer definition
+#################################################################
+# Voluntary L1 Filing Rule (only if NOT E1 and NOT L1 mandatory)
+#################################################################
 :VoluntaryL1Filer owl:equivalentClass [
     rdf:type owl:Class ;
     owl:intersectionOf (
         :AustrianResident
+        [ rdf:type owl:Class ; owl:complementOf :MandatoryE1Filer ]
+        [ rdf:type owl:Class ; owl:complementOf :MandatoryL1Filer ]
         [ owl:unionOf (
             # Case 1: Single employer with correct wage tax
             [ owl:intersectionOf (
@@ -278,23 +307,18 @@ dcterms:modified rdf:type owl:AnnotationProperty .
             ) ]
             # Case 2: Tax refund conditions (any of these)
             [ owl:unionOf (
-                # Different income levels without rolling-up
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasVaryingIncomeNoRollup ;
                   owl:hasValue true ]
-                # Changed employer or partial year
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasEmployerChange ;
                   owl:hasValue true ]
-                # Low pay with SV repayment eligibility
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasSVRepaymentEligibility ;
                   owl:hasValue true ]
-                # Unclaimed tax credits
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasUnclaimedTaxCredits ;
                   owl:hasValue true ]
-                # Unclaimed deductions or expenses
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasUnclaimedDeductions ;
                   owl:hasValue true ]
@@ -303,246 +327,99 @@ dcterms:modified rdf:type owl:AnnotationProperty .
     )
 ] .
 
-# Mandatory E1 Filing Rule
-:MandatoryE1Filer owl:equivalentClass [
-    rdf:type owl:Class ;
-    owl:intersectionOf (
-        :AustrianResident
-        [ rdf:type owl:Restriction ;
-          owl:onProperty :hasNonWageIncome ;
-          owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                             owl:onDatatype xsd:decimal ;
-                             owl:withRestrictions ( [ xsd:minExclusive "730.0"^^xsd:decimal ] ) ] ]
-    )
-] .
-
 #################################################################
-#    Test Case Individuals
+#    Test Cases
 #################################################################
 
 ### Test Case 1: Mandatory L1 - High Income with Incorrect Tax Credits
 :TestCase_MandatoryL1_HighIncome rdf:type :AustrianResident ;
                                 rdfs:label "Test: Mandatory L1 - High Income with Incorrect Credits"@en ;
-                                rdfs:comment "Austrian resident with income over €14,517 and incorrectly applied single-earner credit" ;
                                 :hasAnnualWageIncome "35000.0"^^xsd:decimal ;
                                 :hasNonWageIncome "0.0"^^xsd:decimal ;
-                                :hasIncorrectTaxCredits true ;
-                                :hasMultipleEmploymentsWithoutJointTax false ;
-                                :hasSpecialPaymentSituations false ;
-                                :hasIncorrectCommuterAllowance false ;
-                                :hasIncorrectFamilyBonus false ;
-                                :hasDiscretionaryAssessment false .
+                                :hasIncorrectTaxCredits true .
 
-### Test Case 2: Mandatory L1 - Multiple Employments
-:TestCase_MandatoryL1_MultipleJobs rdf:type :AustrianResident ;
-                                  rdfs:label "Test: Mandatory L1 - Multiple Employments"@en ;
-                                  rdfs:comment "Austrian resident with two jobs totaling €45,000" ;
-                                  :hasAnnualWageIncome "45000.0"^^xsd:decimal ;
-                                  :hasNonWageIncome "0.0"^^xsd:decimal ;
-                                  :hasMultipleEmploymentsWithoutJointTax true ;
-                                  :hasIncorrectTaxCredits false ;
-                                  :hasSpecialPaymentSituations false ;
-                                  :hasIncorrectCommuterAllowance false ;
-                                  :hasIncorrectFamilyBonus false ;
-                                  :hasDiscretionaryAssessment false .
+### Test Case 2: Mandatory L1 - Wage above 14,517 with Multiple Employers
+:TestCase_MandatoryL1_MultipleEmployers rdf:type :AustrianResident ;
+                                       rdfs:label "Test: Mandatory L1 - Multiple Employers"@en ;
+                                       :hasAnnualWageIncome "20000.0"^^xsd:decimal ;
+                                       :hasNonWageIncome "0.0"^^xsd:decimal ;
+                                       :hasMultipleEmploymentsWithoutJointTax true .
 
-### Test Case 3: Mandatory E1 - Non-Wage Income
-:TestCase_MandatoryE1_NonWageIncome rdf:type :AustrianResident ;
-                                  rdfs:label "Test: Mandatory E1 - Non-Wage Income"@en ;
-                                  rdfs:comment "Austrian resident with non-wage income €25,000 (self-employment, rental, or investment)" ;
-                                  :hasAnnualWageIncome "0.0"^^xsd:decimal ;
-                                  :hasNonWageIncome "25000.0"^^xsd:decimal ;
-                                  :hasMultipleEmploymentsWithoutJointTax false ;
-                                  :hasIncorrectTaxCredits false ;
-                                  :hasSpecialPaymentSituations false .
+### Test Case 3: Mandatory L1 - Special Payment Situations
+:TestCase_MandatoryL1_SpecialPayments rdf:type :AustrianResident ;
+                                      rdfs:label "Test: Mandatory L1 - Special Payment Situations"@en ;
+                                      :hasAnnualWageIncome "16000.0"^^xsd:decimal ;
+                                      :hasSpecialPaymentSituations true .
 
-### Test Case 4: Voluntary L1 - Single Employer with Correct Tax
+### Test Case 4: Mandatory L1 - Discretionary Assessment
+:TestCase_MandatoryL1_Discretionary rdf:type :AustrianResident ;
+                                    rdfs:label "Test: Mandatory L1 - Discretionary Assessment"@en ;
+                                    :hasAnnualWageIncome "18000.0"^^xsd:decimal ;
+                                    :hasDiscretionaryAssessment true .
+
+### Test Case 5: Mandatory L1 - Wage > 13,308 but No Employment Tax Filed
+:TestCase_MandatoryL1_NoEmploymentTax rdf:type :AustrianResident ;
+                                      rdfs:label "Test: Mandatory L1 - No Employment Tax Filed"@en ;
+                                      :hasAnnualWageIncome "14000.0"^^xsd:decimal ;
+                                      :hasFiledEmploymentTax false .
+
+### Test Case 6: Mandatory E1 - Non-Wage Income > 730
+:TestCase_MandatoryE1_HighNonWage rdf:type :AustrianResident ;
+                                  rdfs:label "Test: Mandatory E1 - High Non-Wage Income"@en ;
+                                  :hasAnnualWageIncome "10000.0"^^xsd:decimal ;
+                                  :hasNonWageIncome "5000.0"^^xsd:decimal .
+
+### Test Case 7: Mandatory E1 - Both Wage and Non-Wage
+:TestCase_MandatoryE1_WageAndNonWage rdf:type :AustrianResident ;
+                                     rdfs:label "Test: Mandatory E1 - Wage + Non-Wage"@en ;
+                                     :hasAnnualWageIncome "20000.0"^^xsd:decimal ;
+                                     :hasNonWageIncome "1000.0"^^xsd:decimal ;
+                                     :hasIncorrectTaxCredits true ;
+                                     :hasMultipleEmploymentsWithoutJointTax true .
+# Expected: Classified as MandatoryE1 (overrides L1)
+
+### Test Case 8: Voluntary L1 - Single Employer with Correct Wage Tax
 :TestCase_VoluntaryL1_SingleEmployer rdf:type :AustrianResident ;
-                                    rdfs:label "Test: Voluntary L1 - Single Employer"@en ;
-                                    rdfs:comment "Austrian resident with single employer and correct wage tax" ;
-                                    :hasAnnualWageIncome "40000.0"^^xsd:decimal ;
-                                    :hasNonWageIncome "0.0"^^xsd:decimal ;
-                                    :hasSingleEmployer true ;
-                                    :hasCorrectWageTax true ;
-                                    :hasVaryingIncomeNoRollup false ;
-                                    :hasEmployerChange false ;
-                                    :hasSVRepaymentEligibility false ;
-                                    :hasUnclaimedTaxCredits false ;
-                                    :hasUnclaimedDeductions false .
+                                     rdfs:label "Test: Voluntary L1 - Single Employer Correct Tax"@en ;
+                                     :hasAnnualWageIncome "20000.0"^^xsd:decimal ;
+                                     :hasNonWageIncome "0.0"^^xsd:decimal ;
+                                     :hasSingleEmployer true ;
+                                     :hasCorrectWageTax true .
 
-### Test Case 5: Voluntary L1 - Tax Refund Expected
-:TestCase_VoluntaryL1_Refund rdf:type :AustrianResident ;
-                            rdfs:label "Test: Voluntary L1 - Tax Refund"@en ;
-                            rdfs:comment "Austrian resident with varying income levels without rollup" ;
-                            :hasAnnualWageIncome "30000.0"^^xsd:decimal ;
-                            :hasNonWageIncome "0.0"^^xsd:decimal ;
-                            :hasSingleEmployer true ;
-                            :hasCorrectWageTax true ;
-                            :hasVaryingIncomeNoRollup true ;
-                            :hasEmployerChange false ;
-                            :hasSVRepaymentEligibility false ;
-                            :hasUnclaimedTaxCredits false ;
-                            :hasUnclaimedDeductions false .
-
-### Test Case 6: Mandatory L1 - No Wage Tax
-:TestCase_MandatoryL1_NoWageTax rdf:type :AustrianResident ;
-                                rdfs:label "Test: Mandatory L1 - No Wage Tax"@en ;
-                                rdfs:comment "Austrian resident with income above €13,308 but no wage tax filed" ;
-                                :hasAnnualWageIncome "15000.0"^^xsd:decimal ;
-                                :hasNonWageIncome "0.0"^^xsd:decimal ;
-                                :hasFiledEmploymentTax false ;
-                                :hasMultipleEmploymentsWithoutJointTax false ;
-                                :hasIncorrectTaxCredits false ;
-                                :hasSpecialPaymentSituations false ;
-                                :hasIncorrectCommuterAllowance false ;
-                                :hasIncorrectFamilyBonus false ;
-                                :hasDiscretionaryAssessment false .
-
-### Test Case 7: Voluntary L1 - Unclaimed Deductions
-:TestCase_VoluntaryL1_Deductions rdf:type :AustrianResident ;
-                                rdfs:label "Test: Voluntary L1 - Unclaimed Deductions"@en ;
-                                rdfs:comment "Austrian resident with unclaimed special expenses" ;
-                                :hasAnnualWageIncome "35000.0"^^xsd:decimal ;
-                                :hasNonWageIncome "0.0"^^xsd:decimal ;
-                                :hasSingleEmployer true ;
-                                :hasCorrectWageTax true ;
-                                :hasVaryingIncomeNoRollup false ;
-                                :hasEmployerChange false ;
-                                :hasSVRepaymentEligibility false ;
-                                :hasUnclaimedTaxCredits false ;
-                                :hasUnclaimedDeductions true .
-
-### Test Case 8: Voluntary L1 - Simple Employee
-:TestCase_VoluntaryL1_SimpleEmployee rdf:type :AustrianResident ;
-    rdfs:label "Test: Voluntary L1 - Simple Employee"@en ;
-    rdfs:comment "Austrian resident with simple employment below threshold, eligible for voluntary filing" ;
-                   :hasAnnualWageIncome "12000.0"^^xsd:decimal ;
-                   :hasNonWageIncome "0.0"^^xsd:decimal ;
-                   :hasSingleEmployer true ;
-                   :hasCorrectWageTax true ;
-                   :hasMultipleEmploymentsWithoutJointTax false ;
-                   :hasIncorrectTaxCredits false ;
-                   :hasSpecialPaymentSituations false ;
-                   :hasIncorrectCommuterAllowance false ;
-                   :hasIncorrectFamilyBonus false ;
-                   :hasDiscretionaryAssessment false ;
-                   :hasVaryingIncomeNoRollup false ;
-                   :hasEmployerChange false ;
-                   :hasSVRepaymentEligibility false ;
-                   :hasUnclaimedTaxCredits false ;
-                   :hasUnclaimedDeductions false .
-
-### Test Case 9: Mandatory L1 - Special Payment Situations
-:TestCase_MandatoryL1_SpecialPayment rdf:type :AustrianResident ;
-    rdfs:label "Test: Mandatory L1 - Special Payment Situations"@en ;
-    rdfs:comment "Austrian resident with wage income above threshold and special payment situations (e.g., sick pay, service vouchers)" ;
-    :hasAnnualWageIncome "20000.0"^^xsd:decimal ;
-    :hasOtherIncome "0.0"^^xsd:decimal ;
-    :hasMultipleEmploymentsWithoutJointTax false ;
-    :hasIncorrectTaxCredits false ;
-    :hasSpecialPaymentSituations true ;
-    :hasNoWageTax false ;
-    :hasIncorrectCommuterAllowance false ;
-    :hasIncorrectFamilyBonus false ;
-    :hasDiscretionaryAssessment false .
-
-### Test Case 10: Mandatory L1 - Incorrect Commuter Allowance
-:TestCase_MandatoryL1_IncorrectCommuter rdf:type :AustrianResident ;
-    rdfs:label "Test: Mandatory L1 - Incorrect Commuter Allowance"@en ;
-    rdfs:comment "Austrian resident with high wage income and incorrectly applied commuter allowance" ;
-    :hasAnnualWageIncome "25000.0"^^xsd:decimal ;
-    :hasOtherIncome "0.0"^^xsd:decimal ;
-    :hasMultipleEmploymentsWithoutJointTax false ;
-    :hasIncorrectTaxCredits false ;
-    :hasSpecialPaymentSituations false ;
-    :hasNoWageTax false ;
-    :hasIncorrectCommuterAllowance true ;
-    :hasIncorrectFamilyBonus false ;
-    :hasDiscretionaryAssessment false .
-
-### Test Case 11: Mandatory L1 - Incorrect Family Bonus
-:TestCase_MandatoryL1_IncorrectFamilyBonus rdf:type :AustrianResident ;
-    rdfs:label "Test: Mandatory L1 - Incorrect Family Bonus"@en ;
-    rdfs:comment "Austrian resident with high wage income and incorrectly applied Family Bonus Plus" ;
-    :hasAnnualWageIncome "18000.0"^^xsd:decimal ;
-    :hasOtherIncome "0.0"^^xsd:decimal ;
-    :hasMultipleEmploymentsWithoutJointTax false ;
-    :hasIncorrectTaxCredits false ;
-    :hasSpecialPaymentSituations false ;
-    :hasNoWageTax false ;
-    :hasIncorrectCommuterAllowance false ;
-    :hasIncorrectFamilyBonus true ;
-    :hasDiscretionaryAssessment false .
-
-### Test Case 12: Mandatory L1 - Discretionary Assessment
-:TestCase_MandatoryL1_DiscretionaryAssessment rdf:type :AustrianResident ;
-    rdfs:label "Test: Mandatory L1 - Discretionary Assessment"@en ;
-    rdfs:comment "Austrian resident with wage income and a discretionary assessment included in salary calculation" ;
-    :hasAnnualWageIncome "17000.0"^^xsd:decimal ;
-    :hasOtherIncome "0.0"^^xsd:decimal ;
-    :hasMultipleEmploymentsWithoutJointTax false ;
-    :hasIncorrectTaxCredits false ;
-    :hasSpecialPaymentSituations false ;
-    :hasNoWageTax false ;
-    :hasIncorrectCommuterAllowance false ;
-    :hasIncorrectFamilyBonus false ;
-    :hasDiscretionaryAssessment true .
-
-### Test Case 14: Voluntary L1 - Employer Change
+### Test Case 9: Voluntary L1 - Employer Change
 :TestCase_VoluntaryL1_EmployerChange rdf:type :AustrianResident ;
-    rdfs:label "Test: Voluntary L1 - Employer Change"@en ;
-    rdfs:comment "Austrian resident with employer change eligible for voluntary L1 filing" ;
-    :hasAnnualWageIncome "25000.0"^^xsd:decimal ;
-    :hasOtherIncome "0.0"^^xsd:decimal ;
-    :hasSingleEmployer false ;
-    :hasCorrectWageTax true ;
-    :hasEmployerChange true ;
-    :hasVaryingIncomeNoRollup false ;
-    :hasSVRepaymentEligibility false ;
-    :hasUnclaimedTaxCredits false ;
-    :hasUnclaimedDeductions false .
+                                     rdfs:label "Test: Voluntary L1 - Employer Change"@en ;
+                                     :hasAnnualWageIncome "15000.0"^^xsd:decimal ;
+                                     :hasEmployerChange true .
 
-### Test Case 15: Voluntary L1 - SV Repayment Eligibility
+### Test Case 10: Voluntary L1 - Varying Income, No Rollup
+:TestCase_VoluntaryL1_VaryingIncome rdf:type :AustrianResident ;
+                                    rdfs:label "Test: Voluntary L1 - Varying Income Without Rollup"@en ;
+                                    :hasAnnualWageIncome "12000.0"^^xsd:decimal ;
+                                    :hasVaryingIncomeNoRollup true .
+
+### Test Case 11: Voluntary L1 - SV Repayment Eligibility
 :TestCase_VoluntaryL1_SVRepayment rdf:type :AustrianResident ;
-    rdfs:label "Test: Voluntary L1 - SV Repayment Eligibility"@en ;
-    rdfs:comment "Austrian resident eligible for SV repayment, can file voluntary L1" ;
-    :hasAnnualWageIncome "9000.0"^^xsd:decimal ;
-    :hasOtherIncome "0.0"^^xsd:decimal ;
-    :hasSingleEmployer true ;
-    :hasCorrectWageTax true ;
-    :hasSVRepaymentEligibility true ;
-    :hasEmployerChange false ;
-    :hasVaryingIncomeNoRollup false ;
-    :hasUnclaimedTaxCredits false ;
-    :hasUnclaimedDeductions false .
+                                  rdfs:label "Test: Voluntary L1 - SV Repayment"@en ;
+                                  :hasAnnualWageIncome "8000.0"^^xsd:decimal ;
+                                  :hasSVRepaymentEligibility true .
 
-### Test Case 16: Mandatory L1 - Multiple Triggers
-:TestCase_MandatoryL1_MultipleTriggers rdf:type :AustrianResident ;
-    rdfs:label "Test: Mandatory L1 - Multiple Triggers"@en ;
-    rdfs:comment "Austrian resident with high income, multiple employments, and incorrect tax credits" ;
-    :hasAnnualWageIncome "50000.0"^^xsd:decimal ;
-    :hasNonWageIncome "0.0"^^xsd:decimal ;
-    :hasMultipleEmploymentsWithoutJointTax true ;
-    :hasIncorrectTaxCredits true ;
-    :hasSpecialPaymentSituations false ;
-    :hasIncorrectCommuterAllowance false ;
-    :hasIncorrectFamilyBonus false ;
-    :hasDiscretionaryAssessment false .
+### Test Case 12: Voluntary L1 - Unclaimed Deductions
+:TestCase_VoluntaryL1_UnclaimedDeductions rdf:type :AustrianResident ;
+                                          rdfs:label "Test: Voluntary L1 - Unclaimed Deductions"@en ;
+                                          :hasAnnualWageIncome "10000.0"^^xsd:decimal ;
+                                          :hasUnclaimedDeductions true .
 
-### Test Case 17: Mandatory E1 - High Income, Incorrect Credits, Other Income
-:TestCase_BothL1E1 rdf:type :AustrianResident ;
-    rdfs:label "Test: Mandatory E1 - High Income, Incorrect Credits, Other Income"@en ;
-    rdfs:comment "Austrian resident with high wage income, incorrect tax credits, and non-wage income above E1 threshold" ;
-    :hasAnnualWageIncome "20000.0"^^xsd:decimal ;
-    :hasNonWageIncome "2000.0"^^xsd:decimal ;
-    :hasIncorrectTaxCredits true ;
-    :hasMultipleEmploymentsWithoutJointTax false ;
-    :hasSpecialPaymentSituations false ;
-    :hasIncorrectCommuterAllowance false ;
-    :hasIncorrectFamilyBonus false ;
-    :hasDiscretionaryAssessment false .
-
-### Test Case 18: Voluntary L1 - Special Expenses
+### Test Case 13: Voluntary L1 - Low Income Single Employer
+:TestCase_VoluntaryL1_LowIncome rdf:type :AustrianResident ;
+                               rdfs:label "Test: Voluntary L1 - Low Income Single Employer"@en ;
+                               rdfs:comment "Expected: Classified as VoluntaryL1 (single employer with correct tax)"@en ;
+                               :hasAnnualWageIncome "5000.0"^^xsd:decimal ;
+                               :hasNonWageIncome "0.0"^^xsd:decimal ;
+                               :hasSingleEmployer true ;
+                               :hasCorrectWageTax true .
+                               
+### Use Case 1: Voluntary L1 - Special Expenses
 :TestCase_VoluntaryL1_SpecialExpenses rdf:type :AustrianResident ;
     rdfs:label "Test: Voluntary L1 - Special Expenses"@en ;
     rdfs:comment "A secretary with a single employer can file voluntarily to claim special expenses for a tax refund."@en ;
@@ -550,27 +427,12 @@ dcterms:modified rdf:type owl:AnnotationProperty .
     :hasNonWageIncome "0.0"^^xsd:decimal ;
     :hasSingleEmployer true ;
     :hasCorrectWageTax true ;
-    :hasUnclaimedDeductions true ;
-    :hasVaryingIncomeNoRollup false ;
-    :hasEmployerChange false ;
-    :hasSVRepaymentEligibility false ;
-    :hasUnclaimedTaxCredits false ;
-    :hasMultipleEmploymentsWithoutJointTax false ;
-    :hasIncorrectTaxCredits false ;
-    :hasSpecialPaymentSituations false ;
-    :hasIncorrectCommuterAllowance false ;
-    :hasIncorrectFamilyBonus false ;
-    :hasDiscretionaryAssessment false .
+    :hasUnclaimedDeductions true .
 
-### Test Case 19: Mandatory E1 - Employment and Non-Wage Income
+### Use Case 2: Mandatory E1 - Employment and Non-Wage Income
 :TestCase_MandatoryE1_Employment_NonWage rdf:type :AustrianResident ;
     rdfs:label "Test: Mandatory E1 - Employment and Non-Wage Income"@en ;
     rdfs:comment "Austrian resident with employment income and non-wage income above €730." ;
     :hasAnnualWageIncome "25000.0"^^xsd:decimal ;
-    :hasNonWageIncome "2000.0"^^xsd:decimal ;
-    :hasMultipleEmploymentsWithoutJointTax false ;
-    :hasIncorrectTaxCredits false ;
-    :hasSpecialPaymentSituations false ;
-    :hasIncorrectCommuterAllowance false ;
-    :hasIncorrectFamilyBonus false ;
-    :hasDiscretionaryAssessment false .
+    :hasNonWageIncome "2000.0"^^xsd:decimal 
+    :hasIncorrectTaxCredits false .
