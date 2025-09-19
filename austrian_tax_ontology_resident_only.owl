@@ -188,7 +188,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     </owl:equivalentClass>
 </owl:Class>
 
-<!-- Mandatory L1 Filer (only if NOT E1) -->
+<!-- Mandatory L1 Filer -->
 <owl:Class rdf:about="#MandatoryL1Filer">
     <rdfs:label xml:lang="en">Mandatory Filing with form L1</rdfs:label>
     <rdfs:comment xml:lang="en">
@@ -203,10 +203,6 @@ VERSION: 2.2 (Fixed IRI Issues)
             <owl:intersectionOf rdf:parseType="Collection">
                 <!-- Must be AustrianResident -->
                 <rdf:Description rdf:about="#AustrianResident"/>
-                <!-- Exclude E1 filers -->
-                <owl:Class>
-                    <owl:complementOf rdf:resource="#MandatoryE1Filer"/>
-                </owl:Class>
                 <!-- Union of L1 mandatory conditions -->
                 <owl:Class>
                     <owl:unionOf rdf:parseType="Collection">
@@ -304,13 +300,6 @@ VERSION: 2.2 (Fixed IRI Issues)
             <owl:intersectionOf rdf:parseType="Collection">
                 <!-- Must be AustrianResident -->
                 <rdf:Description rdf:about="#AustrianResident"/>
-                <!-- Exclude E1 and L1 mandatory -->
-                <owl:Class>
-                    <owl:complementOf rdf:resource="#MandatoryE1Filer"/>
-                </owl:Class>
-                <owl:Class>
-                    <owl:complementOf rdf:resource="#MandatoryL1Filer"/>
-                </owl:Class>
                 <!-- Union of voluntary conditions -->
                 <owl:Class>
                     <owl:unionOf rdf:parseType="Collection">
@@ -399,15 +388,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <hasFiledEmploymentTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</hasFiledEmploymentTax>
 </owl:NamedIndividual>
 
-<!-- Test Case 6: Mandatory E1 - High Non-Wage Income -->
-<owl:NamedIndividual rdf:about="#TestCase_MandatoryE1_HighNonWage">
-    <rdf:type rdf:resource="#AustrianResident"/>
-    <rdfs:label>Test: Mandatory E1 - High Non-Wage Income</rdfs:label>
-    <hasAnnualWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10000.0</hasAnnualWageIncome>
-    <hasNonWageIncome rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5000.0</hasNonWageIncome>
-</owl:NamedIndividual>
-
-<!-- Test Case 7: Mandatory E1 - Wage + Non-Wage -->
+<!-- Test Case 6: Mandatory E1 - Wage + Non-Wage -->
 <owl:NamedIndividual rdf:about="#TestCase_MandatoryE1_WageAndNonWage">
     <rdf:type rdf:resource="#AustrianResident"/>
     <rdfs:label>Test: Mandatory E1 - Wage + Non-Wage</rdfs:label>
@@ -418,7 +399,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <hasMultipleEmploymentsWithoutJointTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasMultipleEmploymentsWithoutJointTax>
 </owl:NamedIndividual>
 
-<!-- Test Case 8: Voluntary L1 - Single Employer Correct Tax -->
+<!-- Test Case 7: Voluntary L1 - Single Employer Correct Tax -->
 <owl:NamedIndividual rdf:about="#TestCase_VoluntaryL1_SingleEmployer">
     <rdf:type rdf:resource="#AustrianResident"/>
     <rdfs:label>Test: Voluntary L1 - Single Employer Correct Tax</rdfs:label>
@@ -428,7 +409,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <hasCorrectWageTax rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasCorrectWageTax>
 </owl:NamedIndividual>
 
-<!-- Test Case 9: Voluntary L1 - Employer Change -->
+<!-- Test Case 8: Voluntary L1 - Employer Change -->
 <owl:NamedIndividual rdf:about="#TestCase_VoluntaryL1_EmployerChange">
     <rdf:type rdf:resource="#AustrianResident"/>
     <rdfs:label>Test: Voluntary L1 - Employer Change</rdfs:label>
@@ -436,7 +417,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <hasEmployerChange rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasEmployerChange>
 </owl:NamedIndividual>
 
-<!-- Test Case 10: Voluntary L1 - Varying Income Without Rollup -->
+<!-- Test Case 9: Voluntary L1 - Varying Income Without Rollup -->
 <owl:NamedIndividual rdf:about="#TestCase_VoluntaryL1_VaryingIncome">
     <rdf:type rdf:resource="#AustrianResident"/>
     <rdfs:label>Test: Voluntary L1 - Varying Income Without Rollup</rdfs:label>
@@ -444,7 +425,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <hasVaryingIncomeNoRollup rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasVaryingIncomeNoRollup>
 </owl:NamedIndividual>
 
-<!-- Test Case 11: Voluntary L1 - SV Repayment -->
+<!-- Test Case 10: Voluntary L1 - SV Repayment -->
 <owl:NamedIndividual rdf:about="#TestCase_VoluntaryL1_SVRepayment">
     <rdf:type rdf:resource="#AustrianResident"/>
     <rdfs:label>Test: Voluntary L1 - SV Repayment</rdfs:label>
@@ -452,7 +433,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <hasSVRepaymentEligibility rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSVRepaymentEligibility>
 </owl:NamedIndividual>
 
-<!-- Test Case 12: Voluntary L1 - Unclaimed Deductions -->
+<!-- Test Case 11: Voluntary L1 - Unclaimed Deductions -->
 <owl:NamedIndividual rdf:about="#TestCase_VoluntaryL1_UnclaimedDeductions">
     <rdf:type rdf:resource="#AustrianResident"/>
     <rdfs:label>Test: Voluntary L1 - Unclaimed Deductions</rdfs:label>
@@ -460,7 +441,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <hasUnclaimedDeductions rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasUnclaimedDeductions>
 </owl:NamedIndividual>
 
-<!-- Test Case 13: Voluntary L1 - Low Income Single Employer -->
+<!-- Test Case 12: Voluntary L1 - Low Income Single Employer -->
 <owl:NamedIndividual rdf:about="#TestCase_VoluntaryL1_LowIncome">
     <rdf:type rdf:resource="#AustrianResident"/>
     <rdfs:label>Test: Voluntary L1 - Low Income Single Employer</rdfs:label>
