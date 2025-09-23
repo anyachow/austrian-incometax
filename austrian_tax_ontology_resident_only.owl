@@ -82,12 +82,6 @@ VERSION: 2.2 (Fixed IRI Issues)
         <rdfs:label xml:lang="en">has special payment situations</rdfs:label>
         <rdfs:comment xml:lang="en">Indicates receipt of sick pay, armed forces payments, service vouchers, etc.</rdfs:comment>
     </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="#hasVaryingIncomeLevels">
-        <rdfs:domain rdf:resource="#AustrianResident"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-        <rdfs:label xml:lang="en">has varying income levels</rdfs:label>
-        <rdfs:comment xml:lang="en">Indicates if employee received different levels of income during the year.</rdfs:comment>
-    </owl:DatatypeProperty>
     <owl:DatatypeProperty rdf:about="#hasUnclaimedDeductions">
         <rdfs:domain rdf:resource="#AustrianResident"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
@@ -150,16 +144,17 @@ VERSION: 2.2 (Fixed IRI Issues)
     </owl:DatatypeProperty>
     
     <!-- Classes -->
-    <owl:Class rdf:about="#AustrianResident">
-        <rdfs:label xml:lang="en">Austrian Resident</rdfs:label>
-        <rdfs:comment xml:lang="en">
-            A natural person with unlimited tax liability in Austria under §1 EStG.
-            Basis for classification into filing obligation categories.
-        </rdfs:comment>
-    </owl:Class>
-    
-    <!-- Mandatory E1 Filer -->
+<owl:Class rdf:about="#AustrianResident">
+    <rdfs:label xml:lang="en">Austrian Resident</rdfs:label>
+    <rdfs:comment xml:lang="en">
+        A natural person with unlimited tax liability in Austria under §1 EStG.
+        Basis for classification into filing obligation categories.
+    </rdfs:comment>
+</owl:Class>
+
+<!-- Mandatory E1 Filer -->
 <owl:Class rdf:about="#MandatoryE1Filer">
+    <rdfs:subClassOf rdf:resource="#AustrianResident"/>
     <rdfs:label xml:lang="en">Mandatory Filing with form E1</rdfs:label>
     <rdfs:comment xml:lang="en">
         Taxpayers required to file E1 tax return. Required when: 
@@ -190,6 +185,7 @@ VERSION: 2.2 (Fixed IRI Issues)
 
 <!-- Mandatory L1 Filer -->
 <owl:Class rdf:about="#MandatoryL1Filer">
+    <rdfs:subClassOf rdf:resource="#AustrianResident"/>
     <rdfs:label xml:lang="en">Mandatory Filing with form L1</rdfs:label>
     <rdfs:comment xml:lang="en">
         Taxpayers legally required to file L1 tax return under Austrian law.
@@ -201,9 +197,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <owl:equivalentClass>
         <owl:Class>
             <owl:intersectionOf rdf:parseType="Collection">
-                <!-- Must be AustrianResident -->
                 <rdf:Description rdf:about="#AustrianResident"/>
-                <!-- Union of L1 mandatory conditions -->
                 <owl:Class>
                     <owl:unionOf rdf:parseType="Collection">
                         <!-- Wage > 14,517 AND triggers -->
@@ -284,8 +278,9 @@ VERSION: 2.2 (Fixed IRI Issues)
     </owl:equivalentClass>
 </owl:Class>
 
-<!-- Voluntary L1 Filer (only if NOT E1 and NOT L1) -->
+<!-- Voluntary L1 Filer -->
 <owl:Class rdf:about="#VoluntaryL1Filer">
+    <rdfs:subClassOf rdf:resource="#AustrianResident"/>
     <rdfs:label xml:lang="en">Voluntary Filing with form L1</rdfs:label>
     <rdfs:comment xml:lang="en">
         Taxpayers who may benefit from voluntary filing with L1 form.
@@ -298,9 +293,7 @@ VERSION: 2.2 (Fixed IRI Issues)
     <owl:equivalentClass>
         <owl:Class>
             <owl:intersectionOf rdf:parseType="Collection">
-                <!-- Must be AustrianResident -->
                 <rdf:Description rdf:about="#AustrianResident"/>
-                <!-- Union of voluntary conditions -->
                 <owl:Class>
                     <owl:unionOf rdf:parseType="Collection">
                         <!-- Single employer with correct wage tax -->

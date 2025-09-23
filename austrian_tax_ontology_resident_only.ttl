@@ -93,12 +93,6 @@ dcterms:modified rdf:type owl:AnnotationProperty .
                             rdfs:label "has special payment situations"@en ;
                             rdfs:comment "Indicates receipt of sick pay, armed forces payments, service vouchers, etc."@en .
 
-:hasVaryingIncomeLevels rdf:type owl:DatatypeProperty ;
-                        rdfs:domain :AustrianResident ;
-                        rdfs:range xsd:boolean ;
-                        rdfs:label "has varying income levels"@en ;
-                        rdfs:comment "Indicates if employee received different levels of income during the year."@en .
-
 :hasUnclaimedDeductions rdf:type owl:DatatypeProperty ;
                        rdfs:domain :AustrianResident ;
                        rdfs:range xsd:boolean ;
@@ -135,7 +129,6 @@ dcterms:modified rdf:type owl:AnnotationProperty .
                            rdfs:label "has SV repayment eligibility"@en ;
                            rdfs:comment "Indicates eligibility for SV repayment due to low pay."@en .
 
-# Add new data properties for voluntary filing conditions
 :hasSingleEmployer rdf:type owl:DatatypeProperty ;
                    rdfs:domain :AustrianResident ;
                    rdfs:range xsd:boolean ;
@@ -199,133 +192,176 @@ dcterms:modified rdf:type owl:AnnotationProperty .
                   - Excludes fully taxed capital yields"""@en .
 
 #################################################################
-# Priority hierarchy:
-# MandatoryE1Filer > MandatoryL1Filer > VoluntaryL1Filer
+# Mandatory E1 Filing Rule
 #################################################################
-
-# Declare disjointness
-DisjointClasses(
-    :MandatoryE1Filer
-    :MandatoryL1Filer
-    :VoluntaryL1Filer
-)
-
-#################################################################
-# Mandatory E1 Filing Rule (highest priority)
-#################################################################
-:MandatoryE1Filer owl:equivalentClass [
-    rdf:type owl:Class ;
-    owl:intersectionOf (
-        :AustrianResident
-        [ rdf:type owl:Restriction ;
-          owl:onProperty :hasNonWageIncome ;
-          owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                               owl:onDatatype xsd:decimal ;
-                               owl:withRestrictions (
-                                 [ xsd:minExclusive "730.0"^^xsd:decimal ]
-                               ) ] ]
-    )
-] .
-
-#################################################################
-# Mandatory L1 Filing Rule (only if NOT E1)
-#################################################################
-:MandatoryL1Filer owl:equivalentClass [
-    rdf:type owl:Class ;
-    owl:intersectionOf (
-        :AustrianResident
-        [ rdf:type owl:Class ; owl:complementOf :MandatoryE1Filer ]
-        [ owl:unionOf (
-            # Main case: Wage > 14,517 AND (any of the three triggers)
-            [ owl:intersectionOf (
-                [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasAnnualWageIncome ;
-                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                       owl:onDatatype xsd:decimal ;
-                                       owl:withRestrictions (
-                                         [ xsd:minExclusive "14517.0"^^xsd:decimal ]
-                                       ) ] ]
-                [ owl:unionOf (
-                    [ rdf:type owl:Restriction ;
-                      owl:onProperty :hasMultipleEmploymentsWithoutJointTax ;
-                      owl:hasValue true ]
-                    [ rdf:type owl:Restriction ;
-                      owl:onProperty :hasIncorrectCommuterAllowance ;
-                      owl:hasValue true ]
-                    [ rdf:type owl:Restriction ;
-                      owl:onProperty :hasIncorrectFamilyBonus ;
-                      owl:hasValue true ]
-                ) ]
-            ) ]
-            # Wage income above threshold but employment tax NOT filed
-            [ owl:intersectionOf (
-                [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasAnnualWageIncome ;
-                  owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                       owl:onDatatype xsd:decimal ;
-                                       owl:withRestrictions (
-                                         [ xsd:minInclusive "13308.0"^^xsd:decimal ]
-                                       ) ] ]
-                [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasFiledEmploymentTax ;
-                  owl:hasValue false ]
-            ) ]
-            # Special payment situations
+:MandatoryE1Filer rdf:type owl:Class ;
+    rdfs:subClassOf :AustrianResident ;
+    rdfs:label "Mandatory Filing with form E1"@en ;
+    rdfs:comment """Taxpayers required to file E1 tax return. Required when additional non-employment income exceeds EUR 730 excludes fully taxed capital yields"""@en ;
+    owl:equivalentClass [
+        rdf:type owl:Class ;
+        owl:intersectionOf (
+            :AustrianResident
             [ rdf:type owl:Restriction ;
-              owl:onProperty :hasSpecialPaymentSituations ;
-              owl:hasValue true ]
-            # Discretionary assessment
-            [ rdf:type owl:Restriction ;
-              owl:onProperty :hasDiscretionaryAssessment ;
-              owl:hasValue true ]
-            # Incorrect tax credits
-            [ rdf:type owl:Restriction ;
-              owl:onProperty :hasIncorrectTaxCredits ;
-              owl:hasValue true ]
-        ) ]
-    )
-] .
+              owl:onProperty :hasNonWageIncome ;
+              owl:someValuesFrom [
+                  rdf:type rdfs:Datatype ;
+                  owl:onDatatype xsd:decimal ;
+                  owl:withRestrictions (
+                      [ xsd:minExclusive "730.0"^^xsd:decimal ]
+                  )
+              ]
+            ]
+        )
+    ] .
 
 #################################################################
-# Voluntary L1 Filing Rule (only if NOT E1 and NOT L1 mandatory)
+# Mandatory L1 Filing Rule
 #################################################################
-:VoluntaryL1Filer owl:equivalentClass [
-    rdf:type owl:Class ;
-    owl:intersectionOf (
-        :AustrianResident
-        [ rdf:type owl:Class ; owl:complementOf :MandatoryE1Filer ]
-        [ rdf:type owl:Class ; owl:complementOf :MandatoryL1Filer ]
-        [ owl:unionOf (
-            # Case 1: Single employer with correct wage tax
-            [ owl:intersectionOf (
+:MandatoryL1Filer rdf:type owl:Class ;
+    rdfs:subClassOf :AustrianResident ;
+    rdfs:label "Mandatory Filing with form L1"@en ;
+    rdfs:comment """Taxpayers legally required to file L1 tax return under Austrian law.
+Required when: 
+- Annual wage over 14,517 AND specific conditions are met 
+- Tax credits or deductions incorrectly applied 
+- Multiple simultaneous wage incomes 
+- Special payment situations"""@en ;
+    owl:equivalentClass [
+        rdf:type owl:Class ;
+        owl:intersectionOf (
+            :AustrianResident
+            [ rdf:type owl:Class ;
+              owl:unionOf (
+                # Wage > 14,517 AND triggers
+                [ rdf:type owl:Class ;
+                  owl:intersectionOf (
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasAnnualWageIncome ;
+                      owl:someValuesFrom [
+                        rdf:type rdfs:Datatype ;
+                        owl:onDatatype xsd:decimal ;
+                        owl:withRestrictions (
+                          [ xsd:minExclusive "14517.0"^^xsd:decimal ]
+                        )
+                      ]
+                    ]
+                    [ rdf:type owl:Class ;
+                      owl:unionOf (
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :hasMultipleEmploymentsWithoutJointTax ;
+                          owl:hasValue "true"^^xsd:boolean
+                        ]
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :hasIncorrectCommuterAllowance ;
+                          owl:hasValue "true"^^xsd:boolean
+                        ]
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :hasIncorrectFamilyBonus ;
+                          owl:hasValue "true"^^xsd:boolean
+                        ]
+                      )
+                    ]
+                  )
+                ]
+                # Wage >= 13,308 but no employment tax filed
+                [ rdf:type owl:Class ;
+                  owl:intersectionOf (
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasAnnualWageIncome ;
+                      owl:someValuesFrom [
+                        rdf:type rdfs:Datatype ;
+                        owl:onDatatype xsd:decimal ;
+                        owl:withRestrictions (
+                          [ xsd:minInclusive "13308.0"^^xsd:decimal ]
+                        )
+                      ]
+                    ]
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasFiledEmploymentTax ;
+                      owl:hasValue "false"^^xsd:boolean
+                    ]
+                  )
+                ]
+                # Special payment situations
                 [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasSingleEmployer ;
-                  owl:hasValue true ]
+                  owl:onProperty :hasSpecialPaymentSituations ;
+                  owl:hasValue "true"^^xsd:boolean
+                ]
+                # Discretionary assessment
                 [ rdf:type owl:Restriction ;
-                  owl:onProperty :hasCorrectWageTax ;
-                  owl:hasValue true ]
-            ) ]
-            # Case 2: Tax refund conditions (any of these)
-            [ owl:unionOf (
+                  owl:onProperty :hasDiscretionaryAssessment ;
+                  owl:hasValue "true"^^xsd:boolean
+                ]
+                # Incorrect tax credits
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty :hasIncorrectTaxCredits ;
+                  owl:hasValue "true"^^xsd:boolean
+                ]
+              )
+            ]
+        )
+    ] .
+
+
+#################################################################
+# Voluntary L1 Filing Rule 
+#################################################################
+:VoluntaryL1Filer rdf:type owl:Class ;
+    rdfs:subClassOf :AustrianResident ;
+    rdfs:label "Voluntary Filing with form L1"@en ;
+    rdfs:comment """Taxpayers who may benefit from voluntary filing with L1 form.
+Applicable for: 
+- Single employer with correct wage tax withholding 
+- Varying income levels without rolling-up 
+- Employer changes or partial year employment 
+- Low income SV repayment eligibility 
+- Unclaimed tax credits or deductions"""@en ;
+    owl:equivalentClass [
+        rdf:type owl:Class ;
+        owl:intersectionOf (
+            :AustrianResident
+            [ rdf:type owl:Class ;
+              owl:unionOf (
+                # Single employer with correct wage tax
+                [ rdf:type owl:Class ;
+                  owl:intersectionOf (
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasSingleEmployer ;
+                      owl:hasValue "true"^^xsd:boolean
+                    ]
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :hasCorrectWageTax ;
+                      owl:hasValue "true"^^xsd:boolean
+                    ]
+                  )
+                ]
+                # Refund conditions
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasVaryingIncomeNoRollup ;
-                  owl:hasValue true ]
+                  owl:hasValue "true"^^xsd:boolean
+                ]
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasEmployerChange ;
-                  owl:hasValue true ]
+                  owl:hasValue "true"^^xsd:boolean
+                ]
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasSVRepaymentEligibility ;
-                  owl:hasValue true ]
+                  owl:hasValue "true"^^xsd:boolean
+                ]
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasUnclaimedTaxCredits ;
-                  owl:hasValue true ]
+                  owl:hasValue "true"^^xsd:boolean
+                ]
                 [ rdf:type owl:Restriction ;
                   owl:onProperty :hasUnclaimedDeductions ;
-                  owl:hasValue true ]
-            ) ]
-        ) ]
-    )
-] .
+                  owl:hasValue "true"^^xsd:boolean
+                ]
+              )
+            ]
+        )
+    ] .
+
 
 #################################################################
 #    Test Cases
