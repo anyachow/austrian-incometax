@@ -362,6 +362,35 @@ Applicable for:
         )
     ] .
 
+#################################################################
+#    Ontology Reuse Alignments
+#################################################################
+# AustrianResident alignments
+:AustrianResident 
+    skos:closeMatch <https://doi.org/10.1504/IJMSO.2021.120290#Residence> ;
+    rdfs:seeAlso <https://doi.org/10.1007/978-3-319-05570-1_7#SubjectsOfTaxation> ;
+    skos:narrowMatch <https://doi.org/10.1186/s43093-023-00253-w#income_tax_payer> ;
+    rdfs:seeAlso <https://doi.org/10.1109/FSKD.2015.7382200#tax_payer> ;
+    rdfs:seeAlso <https://ieeexplore.ieee.org/document/5602143#Taxpayer> .
+
+# hasAnnualWageIncome alignments
+:hasAnnualWageIncome 
+    rdfs:seeAlso <https://doi.org/10.1186/s43093-023-00253-w#transaction> ;
+    rdfs:seeAlso <https://doi.org/10.1186/s43093-023-00253-w#taxpayment> .
+
+# hasNonWageIncome alignments
+:hasNonWageIncome 
+    skos:broadMatch <https://doi.org/10.1186/s43093-023-00253-w#income_from_real_estate_possessions> ;
+    skos:broadMatch <https://doi.org/10.1186/s43093-023-00253-w#income_from_the_commercial_and_professional_activity> .
+
+# hasUnclaimedDeductions alignment
+:hasUnclaimedDeductions 
+    skos:narrowMatch <https://doi.org/10.1186/s43093-023-00253-w#TaxDeduction> .
+
+# hasUnclaimedTaxCredits alignments
+:hasUnclaimedTaxCredits 
+    skos:narrowMatch <https://doi.org/10.1186/s43093-023-00253-w#TaxRefund> ;
+    skos:narrowMatch <https://doi.org/10.1504/IJMSO.2021.120290#TaxReturns> .
 
 #################################################################
 #    Test Cases

@@ -7,7 +7,8 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:dcterms="http://purl.org/dc/terms/">
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
     <owl:Ontology rdf:about="http://example.org/austrian-tax-resident">
         <rdfs:label xml:lang="en">Austrian Tax Residents Income Tax Ontology</rdfs:label>
         <rdfs:comment xml:lang="en">A comprehensive OWL 2 ontology for determining income tax filing obligations for Austrian tax residents.
@@ -336,6 +337,36 @@ VERSION: 2.2 (Fixed IRI Issues)
         </owl:Class>
     </owl:equivalentClass>
 </owl:Class>
+
+<!-- === Ontology Reuse Alignments === -->
+
+<rdf:Description rdf:about="http://example.org/austrian-tax-resident#AustrianResident">
+  <skos:closeMatch rdf:resource="https://doi.org/10.1504/IJMSO.2021.120290#Residence"/>
+  <rdfs:seeAlso rdf:resource="https://doi.org/10.1007/978-3-319-05570-1_7#SubjectsOfTaxation"/>
+  <skos:narrowMatch rdf:resource="https://doi.org/10.1186/s43093-023-00253-w#income_tax_payer"/>
+  <rdfs:seeAlso rdf:resource="https://doi.org/10.1109/FSKD.2015.7382200#tax_payer"/>
+  <rdfs:seeAlso rdf:resource="https://ieeexplore.ieee.org/document/5602143#Taxpayer"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasAnnualWageIncome">
+  <rdfs:seeAlso rdf:resource="https://doi.org/10.1186/s43093-023-00253-w#transaction"/>
+  <rdfs:seeAlso rdf:resource="https://doi.org/10.1186/s43093-023-00253-w#taxpayment"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasNonWageIncome">
+  <skos:broadMatch rdf:resource="https://doi.org/10.1186/s43093-023-00253-w#income_from_real_estate_possessions"/>
+  <skos:broadMatch rdf:resource="https://doi.org/10.1186/s43093-023-00253-w#income_from_the_commercial_and_professional_activity"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasUnclaimedDeductions">
+  <skos:narrowMatch rdf:resource="https://doi.org/10.1186/s43093-023-00253-w#TaxDeduction"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/austrian-tax-resident#hasUnclaimedTaxCredits">
+  <skos:narrowMatch rdf:resource="https://doi.org/10.1186/s43093-023-00253-w#TaxRefund"/>
+  <skos:narrowMatch rdf:resource="https://doi.org/10.1504/IJMSO.2021.120290#TaxReturns"/>
+</rdf:Description>
+
 
 <!-- Test Cases -->
 
