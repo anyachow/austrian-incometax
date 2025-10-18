@@ -4,9 +4,28 @@
 This repository contains the **Austrian Income Tax Filing Ontology for Austrian Resident Individuals**, developed to represent and reason about **income tax filing obligations** in Austria.  
 It models the conditions under which an Austrian resident taxpayer must file a **tax return (Form L1 or E1)**—either mandatory or voluntary—based on income sources, employment situations, and specific tax conditions.
 
-The ontology is provided in:
-- `austrian_tax_ontology_resident_only.ttl` – Turtle format 
-- `austrian_tax_ontology_resident_only.owl` – OWL/RDF-XML format 
+---
+
+## Repository Contents
+
+### Ontology Files
+The main ontology is provided in two formats:
+- **`austrian-tax-ontology.ttl`** – Turtle format 
+- **`austrian-tax-ontology.owl`** – OWL/RDF-XML format 
+
+### Test Cases
+A comprehensive set of test cases to validate the ontology's reasoning capabilities:
+- **`test-cases.ttl`** – Test cases in Turtle format
+- **`test-cases.owl`** – Test cases in OWL/RDF-XML format
+- Includes 15 test cases covering:
+  - 5 Mandatory L1 filing scenarios
+  - 1 Mandatory E1 filing scenario  
+  - 1 Combined Mandatory E1 + L1 scenario
+  - 7 Voluntary L1 filing scenarios
+  - 2 Tax books use cases
+
+### Documentation
+- **`COMPETENCY_QUESTIONS.md`** – Detailed competency questions that guide the ontology design
 
 ---
 
@@ -138,6 +157,24 @@ The ontology links to external academic tax ontologies using **SKOS** and **RDFS
 
 ---
 
+## Test Cases and Validation
+
+The ontology has been validated with **12 test cases and 2 tax-book use cases.**
+
+### Test Results Summary
+
+| Total Test Cases | Passed | Failed | Success Rate |
+|------------------|--------|--------|--------------|
+| 15 | 14 | 1 | 93.3% |
+
+**Combined E1 + L1 filing (Test Case 6)**
+- **Description:** Taxpayer with €20,000 wage income, €1,000 non-wage income, multiple employments, and incorrect tax credits
+- **Expected:** Mandatory E1 Filer
+- **Actual:** Classified as both Mandatory E1 Filer AND Mandatory L1 Filer
+- **Explanation:** The ontology is designed in such that classes are not mutually exclusive due to the nature of taxation. However, the ontology lacks prioritisation rules, resulting failed.
+
+---
+
 ## Compliance Note
 This ontology follows the **Austrian Income Tax Act (EStG 1988)** and relevant BMF interpretations as of **Tax Year 2025**.  
 It is designed for **academic and non-commercial use** and aims to support transparent, legally grounded decision automation in e-government contexts.  
@@ -156,9 +193,25 @@ The ontology does **not replace professional tax advice** and is provided solely
 
 ## Usage
 1. Open the ontology in **Protégé**.  
-2. Load either the `.ttl` or `.owl` file.  
+2. Load test cases file.  
 3. Use the **HermiT** reasoner to infer classification results.  
 4. Optionally query with **SPARQL** to retrieve taxpayer filing obligations.  
+
+---
+
+## Repository Structure
+
+```
+austrian-tax-ontology/
+├── README.md                           # This file
+├── COMPETENCY_QUESTIONS.md             # Detailed competency questions
+├── austrian-tax-ontology.ttl           # Main ontology (Turtle)
+├── austrian-tax-ontology.owl           # Main ontology (OWL/XML)
+├── test-cases.ttl                      # Test cases (Turtle)
+└── test-cases.owl                      # Test cases (OWL/XML)
+```
+
+---
 
 ## License and Citation
 This ontology is released for **academic and non-commercial use**.  
